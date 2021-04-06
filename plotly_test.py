@@ -30,7 +30,7 @@ fig = make_subplots(rows=3, cols=3,
 		[{},{},{}]]
 )
 
-colors=["#000000","#6600CC","#FFCC00","#CC0000"]
+colors=["#000000","#6600CC","#FFCC00","#CC0000","#00FF00","#65000B"]
 
 for i in range(len(cmssw)):
 	path="/eos/cms/store/user/cmsbuild/profiling/data/"+cmssw[i]+"/slc7_amd64_gcc900/23434.21/step"+sys.argv[2]+"_TimeMemoryInfo.log"

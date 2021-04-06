@@ -1,0 +1,238 @@
+,id,name,cumulative,pct
+0,41,"cms::CkfTrackCandidateMakerBase::produceBase(edm::Event&, edm::EventSetup const&)",973.36,11.38
+1,48,"CAHitNtupletEDProducerT<CAHitQuadrupletGenerator>::produce(edm::Event&, edm::EventSetup const&)",492.605,5.76
+2,53,"PrimaryVertexProducer::produce(edm::Event&, edm::EventSetup const&)",452.835,5.29
+3,54,"ElectronSeedProducer::produce(edm::Event&, edm::EventSetup const&)",443.7,5.19
+4,60,"GsfTrackProducer::produce(edm::Event&, edm::EventSetup const&)",381.0,4.45
+5,69,"TrackProducer::produce(edm::Event&, edm::EventSetup const&)",282.795,3.31
+6,76,"TrackstersProducer::produce(edm::Event&, edm::EventSetup const&)",236.54,2.77
+7,84,"MuonIdProducer::produce(edm::Event&, edm::EventSetup const&)",218.99,2.56
+8,95,"TrackListMerger::produce(edm::Event&, edm::EventSetup const&)",185.96,2.17
+9,110,"TrackExtenderWithMTDT<std::vector<reco::Track, std::allocator<reco::Track> > >::produce(edm::Event&, edm::EventSetup const&)",165.105,1.93
+10,131,"MuonSimClassifier::produce(edm::Event&, edm::EventSetup const&)",139.54,1.63
+11,134,"LowPtGsfElectronSeedProducer::produce(edm::Event&, edm::EventSetup const&)",138.555,1.62
+12,143,"PFClusterProducer::produce(edm::Event&, edm::EventSetup const&)",128.555,1.5
+13,150,"PFDisplacedVertexProducer::produce(edm::Event&, edm::EventSetup const&)",115.11,1.35
+14,175,"PFECALSuperClusterProducer::produce(edm::Event&, edm::EventSetup const&)",106.605,1.25
+15,187,"CAHitNtupletEDProducerT<CAHitTripletGenerator>::produce(edm::Event&, edm::EventSetup const&)",102.81,1.2
+16,194,"PrimaryVertexSorter<std::vector<reco::RecoChargedRefCandidate, std::allocator<reco::RecoChargedRefCandidate> > >::produce(edm::Event&, edm::EventSetup const&)",97.73,1.14
+17,218,"SeedCreatorFromRegionHitsEDProducerT<SeedFromConsecutiveHitsCreator>::produce(edm::Event&, edm::EventSetup const&)",85.26,1.0
+18,237,"TemplatedVertexArbitrator<edm::View<reco::Candidate>, reco::VertexCompositePtrCandidate>::produce(edm::Event&, edm::EventSetup const&)",73.79,0.86
+19,243,"PFDisplacedVertexCandidateProducer::produce(edm::Event&, edm::EventSetup const&)",71.465,0.84
+20,248,"HGCalLayerClusterProducer::produce(edm::Event&, edm::EventSetup const&)",70.97,0.83
+21,257,"TrackExtrapolator::produce(edm::Event&, edm::EventSetup const&)",67.375,0.79
+22,280,"PFElecTkProducer::produce(edm::Event&, edm::EventSetup const&)",60.145,0.7
+23,291,"(anonymous namespace)::DuplicateTrackMerger::produce(edm::Event&, edm::EventSetup const&)",54.875,0.64
+24,298,"HitPairEDProducer::produce(edm::Event&, edm::EventSetup const&)",51.405,0.6
+25,303,"HitTripletEDProducerT<PixelTripletHLTGenerator>::produce(edm::Event&, edm::EventSetup const&)",50.985,0.6
+26,341,"PFBlockProducer::produce(edm::Event&, edm::EventSetup const&)",42.245,0.49
+27,351,"PuppiProducer::produce(edm::Event&, edm::EventSetup const&)",39.7,0.46
+28,353,"PFPileUp::produce(edm::Event&, edm::EventSetup const&)",39.19,0.46
+29,358,"TrackstersMergeProducer::produce(edm::Event&, edm::EventSetup const&)",37.805,0.44
+30,360,"TauDiscriminationProducerBase<reco::PFTau, edm::ValueMap<reco::SingleTauDiscriminatorContainer>, reco::SingleTauDiscriminatorContainer, reco::PFTauDiscriminator>::produce(edm::Event&, edm::EventSetup const&)",37.65,0.44
+31,371,"ConversionTrackMerger::produce(edm::Event&, edm::EventSetup const&)",36.27,0.42
+32,375,"GsfElectronProducer::produce(edm::Event&, edm::EventSetup const&)",35.67,0.42
+33,378,"JetTracksAssociatorAtVertex::produce(edm::Event&, edm::EventSetup const&)",35.39,0.41
+34,387,"V0Producer::produce(edm::Event&, edm::EventSetup const&)",34.235,0.4
+35,391,"TemplatedVertexArbitrator<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Vertex>::produce(edm::Event&, edm::EventSetup const&)",33.255,0.39
+36,432,"SeedCreatorFromRegionHitsEDProducerT<SeedFromConsecutiveHitsTripletOnlyCreator>::produce(edm::Event&, edm::EventSetup const&)",28.985,0.34
+37,444,"CosmicMuonProducer::produce(edm::Event&, edm::EventSetup const&)",28.15,0.33
+38,458,"GoodSeedProducer::produce(edm::Event&, edm::EventSetup const&)",26.67,0.31
+39,481,"PFProducer::produce(edm::Event&, edm::EventSetup const&)",23.16,0.27
+40,482,"PFTrackProducer::produce(edm::Event&, edm::EventSetup const&)",23.075,0.27
+41,484,"PFRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",22.79,0.27
+42,498,"TemplatedInclusiveVertexFinder<edm::View<reco::Candidate>, reco::VertexCompositePtrCandidate>::produce(edm::Event&, edm::EventSetup const&)",21.255,0.25
+43,521,"RecoTauProducer::produce(edm::Event&, edm::EventSetup const&)",20.095,0.23
+44,537,"ConversionTrackCandidateProducer::produce(edm::Event&, edm::EventSetup const&)",18.23,0.21
+45,548,"SiPixelClusterProducer::produce(edm::Event&, edm::EventSetup const&)",18.005,0.21
+46,628,"ConversionProducer::produce(edm::Event&, edm::EventSetup const&)",17.545,0.21
+47,632,"EcalUncalibRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",17.54,0.21
+48,864,"StandAloneMuonProducer::produce(edm::Event&, edm::EventSetup const&)",16.455,0.19
+49,1010,"FastjetJetProducer::produce(edm::Event&, edm::EventSetup const&)",15.67,0.18
+50,1190,"JetPlusTrackProducer::produce(edm::Event&, edm::EventSetup const&)",14.545,0.17
+51,1330,"CosmicsMuonIdProducer::produce(edm::Event&, edm::EventSetup const&)",13.59,0.16
+52,1363,"IPProducer<std::vector<edm::Ptr<reco::Candidate>, std::allocator<edm::Ptr<reco::Candidate> > >, reco::JetTagInfo, IPProducerHelpers::FromJetAndCands>::produce(edm::Event&, edm::EventSetup const&)",13.345,0.16
+53,1516,"PFRecoTauChargedHadronProducer::produce(edm::Event&, edm::EventSetup const&)",9.635,0.11
+54,1529,"TemplatedInclusiveVertexFinder<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Vertex>::produce(edm::Event&, edm::EventSetup const&)",9.32,0.11
+55,1553,"TOFPIDProducer::produce(edm::Event&, edm::EventSetup const&)",8.955,0.1
+56,1614,"ME0SegmentProducer::produce(edm::Event&, edm::EventSetup const&)",7.82,0.09
+57,1627,"cms::MuonMETValueMapProducer::produce(edm::Event&, edm::EventSetup const&)",7.585,0.09
+58,1648,"HGCalRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",7.31,0.09
+59,1664,"cms::SiPixelRecHitConverter::produce(edm::Event&, edm::EventSetup const&)",7.055,0.08
+60,1693,"TopProjector<reco::PFCandidate, reco::PFCandidate, TopProjectorFwdPtrOverlap<reco::PFCandidate, reco::PFCandidate> >::produce(edm::Event&, edm::EventSetup const&)",6.595,0.08
+61,1698,"GlobalMuonProducer::produce(edm::Event&, edm::EventSetup const&)",6.525,0.08
+62,1709,"JetTagProducer::produce(edm::Event&, edm::EventSetup const&)",6.415,0.07
+63,1746,"MultiClustersFromTrackstersProducer::produce(edm::Event&, edm::EventSetup const&)",6.035,0.07
+64,1753,"TevMuonProducer::produce(edm::Event&, edm::EventSetup const&)",5.91,0.07
+65,1780,"HGCalUncalibRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",5.66,0.07
+66,1826,"TemplatedSecondaryVertexProducer<reco::IPTagInfo<std::vector<edm::Ptr<reco::Candidate>, std::allocator<edm::Ptr<reco::Candidate> > >, reco::JetTagInfo>, reco::VertexCompositePtrCandidate>::produce(edm::Event&, edm::EventSetup const&)",5.11,0.06
+67,1827,"reco::CSCHaloDataProducer::produce(edm::Event&, edm::EventSetup const&)",5.11,0.06
+68,2023,"MTDTrackQualityMVAProducer::produce(edm::Event&, edm::EventSetup const&)",3.55,0.04
+69,2043,"TICLLayerTileProducer::produce(edm::Event&, edm::EventSetup const&)",3.44,0.04
+70,2164,"CandIsoDepositProducer::produce(edm::Event&, edm::EventSetup const&)",3.03,0.04
+71,2181,"GEDPhotonProducer::produce(edm::Event&, edm::EventSetup const&)",2.945,0.03
+72,2242,"HBHEPhase1Reconstructor::produce(edm::Event&, edm::EventSetup const&)",2.78,0.03
+73,2418,"PFTauPrimaryVertexProducerBase::produce(edm::Event&, edm::EventSetup const&)",2.27,0.03
+74,2473,"MultiTrackSelector::run(edm::Event&, edm::EventSetup const&) const",2.145,0.03
+75,2601,"DeDxEstimatorProducer::produce(edm::Event&, edm::EventSetup const&)",1.895,0.02
+76,2640,"SeedingLayersEDProducer::produce(edm::Event&, edm::EventSetup const&)",1.83,0.02
+77,2770,"CandIsolatorFromDeposits::produce(edm::Event&, edm::EventSetup const&)",1.605,0.02
+78,2781,"JetTracksAssociatorAtCaloFace::produce(edm::Event&, edm::EventSetup const&)",1.59,0.02
+79,2805,"MTDClusterProducer::produce(edm::Event&, edm::EventSetup const&)",1.57,0.02
+80,2817,"ObjectSelectorProducer<SingleElementCollectionSelectorPlusEvent<std::vector<reco::Track, std::allocator<reco::Track> >, TrackWithVertexSelector, edm::RefVector<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track, edm::refhelper::FindUsingAdvance<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track> >, edm::RefVector<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track, edm::refhelper::FindUsingAdvance<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track> >, helper::SelectionRefAdder<edm::RefVector<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track, edm::refhelper::FindUsingAdvance<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track> > > >, edm::RefVector<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track, edm::refhelper::FindUsingAdvance<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track> >, helper::NullPostProcessor<edm::RefVector<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track, edm::refhelper::FindUsingAdvance<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track> >, edm::stream::EDProducer<> >, helper::CollectionStoreManager<edm::RefVector<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track, edm::refhelper::FindUsingAdvance<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track> >, helper::IteratorToObjectConverter<edm::RefVector<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track, edm::refhelper::FindUsingAdvance<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track> > > >, helper::ObjectSelectorBase<edm::RefVector<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track, edm::refhelper::FindUsingAdvance<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track> >, edm::stream::EDProducer<> >, reco::modules::NoEventSetupInit<SingleElementCollectionSelectorPlusEvent<std::vector<reco::Track, std::allocator<reco::Track> >, TrackWithVertexSelector, edm::RefVector<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track, edm::refhelper::FindUsingAdvance<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track> >, edm::RefVector<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track, edm::refhelper::FindUsingAdvance<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track> >, helper::SelectionRefAdder<edm::RefVector<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track, edm::refhelper::FindUsingAdvance<std::vector<reco::Track, std::allocator<reco::Track> >, reco::Track> > > > > >::produce(edm::Event&, edm::EventSetup const&)",1.56,0.02
+81,2834,"CandidateProducer<edm::View<reco::Track>, std::vector<reco::RecoChargedRefCandidate, std::allocator<reco::RecoChargedRefCandidate> >, AnySelector, converter::TrackToRefCandidate, converter::helper::ConcreteCreator, reco::modules::NoEventSetupInit<AnySelector> >::produce(edm::Event&, edm::EventSetup const&)",1.535,0.02
+82,2847,"HGCalTrackCollectionProducer::produce(edm::Event&, edm::EventSetup const&)",1.52,0.02
+83,2910,"RecoTauCleanerImpl<std::vector<reco::PFTau, std::allocator<reco::PFTau> > >::produce(edm::Event&, edm::EventSetup const&)",1.41,0.02
+84,2969,"CSCDCCUnpacker::produce(edm::Event&, edm::EventSetup const&)",1.33,0.02
+85,2993,"ReducedRecHitCollectionProducer::produce(edm::Event&, edm::EventSetup const&)",1.315,0.02
+86,3098,"MTDTrackingRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",1.19,0.01
+87,3127,"PFLinker::produce(edm::Event&, edm::EventSetup const&)",1.17,0.01
+88,3188,"CaloTowersCreator::produce(edm::Event&, edm::EventSetup const&)",1.11,0.01
+89,3193,"TemplatedVertexMerger<reco::Vertex>::produce(edm::Event&, edm::EventSetup const&)",1.105,0.01
+90,3209,"FilteredLayerClustersProducer::produce(edm::Event&, edm::EventSetup const&)",1.075,0.01
+91,3262,"HybridClusterProducer::produce(edm::Event&, edm::EventSetup const&)",1.025,0.01
+92,3295,"RecoTauGenericJetRegionProducer<reco::PFJet, reco::PFCandidate>::produce(edm::Event&, edm::EventSetup const&)",1.005,0.01
+93,3321,"MuonReSeeder::produce(edm::Event&, edm::EventSetup const&)",0.985,0.01
+94,3354,"MTDUncalibratedRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",0.96,0.01
+95,3382,"PhotonCoreProducer::produce(edm::Event&, edm::EventSetup const&)",0.94,0.01
+96,3414,"ConvertedPhotonProducer::produce(edm::Event&, edm::EventSetup const&)",0.92,0.01
+97,3547,"CorrectedECALPFClusterProducer::produce(edm::Event&, edm::EventSetup const&)",0.84,0.01
+98,3573,"CSCRecHitDProducer::produce(edm::Event&, edm::EventSetup const&)",0.825,0.01
+99,3674,"CSCSegmentProducer::produce(edm::Event&, edm::EventSetup const&)",0.76,0.01
+100,3723,"GamIsoDetIdCollectionProducer::produce(edm::Event&, edm::EventSetup const&)",0.74,0.01
+101,3752,"FixedGridRhoProducerFastjet::produce(edm::Event&, edm::EventSetup const&)",0.725,0.01
+102,3772,"DTRecSegment4DProducer::produce(edm::Event&, edm::EventSetup const&)",0.715,0.01
+103,3895,"SeedClusterRemoverPhase2::produce(edm::Event&, edm::EventSetup const&)",0.665,0.01
+104,3939,"reco::EcalHaloDataProducer::produce(edm::Event&, edm::EventSetup const&)",0.65,0.01
+105,4049,"PFMultiDepthClusterProducer::produce(edm::Event&, edm::EventSetup const&)",0.615,0.01
+106,4117,"ParticleBasedIsoProducer::produce(edm::Event&, edm::EventSetup const&)",0.59,0.01
+107,4129,"InterestingDetIdCollectionProducer::produce(edm::Event&, edm::EventSetup const&)",0.585,0.01
+108,4174,"ConversionTrackProducer::produce(edm::Event&, edm::EventSetup const&)",0.57,0.01
+109,4332,"ClusterSummaryProducer::produce(edm::Event&, edm::EventSetup const&)",0.515,0.01
+110,4331,"TemplatedVertexMerger<reco::VertexCompositePtrCandidate>::produce(edm::Event&, edm::EventSetup const&)",0.515,0.01
+111,4466,"Phase2TrackerClusterizer::produce(edm::Event&, edm::EventSetup const&)",0.48,0.01
+112,4685,"TauDiscriminationProducerBase<reco::PFTau, reco::PFTauDiscriminator, double, reco::PFTauDiscriminator>::produce(edm::Event&, edm::EventSetup const&)",0.42,0.0
+113,4717,"(anonymous namespace)::DeepFlavourJetTagsProducer::produce(edm::Event&, edm::EventSetup const&)",0.41,0.0
+114,4718,"GEDPhotonCoreProducer::produce(edm::Event&, edm::EventSetup const&)",0.41,0.0
+115,4719,"citk::PFIsolationSumProducer::produce(edm::Event&, edm::EventSetup const&)",0.41,0.0
+116,4759,"LowPtGsfElectronSCProducer::produce(edm::Event&, edm::EventSetup const&)",0.4,0.0
+117,4808,"GlobalTrackQualityProducer::produce(edm::Event&, edm::EventSetup const&)",0.385,0.0
+118,5010,"MTDRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",0.34,0.0
+119,5011,"cms::PFMETProducer::produce(edm::Event&, edm::EventSetup const&)",0.34,0.0
+120,5038,"reco::HcalHaloDataProducer::produce(edm::Event&, edm::EventSetup const&)",0.335,0.0
+121,5060,"MuonProducer::produce(edm::Event&, edm::EventSetup const&)",0.33,0.0
+122,5061,"reco::ParticleFlowForChargedMETProducer::produce(edm::Event&, edm::EventSetup const&)",0.33,0.0
+123,5117,"EcalRawToDigi::produce(edm::Event&, edm::EventSetup const&)",0.32,0.0
+124,5199,"cms::CaloMETProducer::produce(edm::Event&, edm::EventSetup const&)",0.305,0.0
+125,5369,"FixedGridRhoProducer::produce(edm::Event&, edm::EventSetup const&)",0.28,0.0
+126,5427,"JetIDProducer::produce(edm::Event&, edm::EventSetup const&)",0.27,0.0
+127,5515,"TemplatedDeepNNTagInfoProducer<reco::IPTagInfo<std::vector<edm::Ptr<reco::Candidate>, std::allocator<edm::Ptr<reco::Candidate> > >, reco::JetTagInfo>, reco::TemplatedSecondaryVertexTagInfo<reco::IPTagInfo<std::vector<edm::Ptr<reco::Candidate>, std::allocator<edm::Ptr<reco::Candidate> > >, reco::JetTagInfo>, reco::VertexCompositePtrCandidate> >::produce(edm::Event&, edm::EventSetup const&)",0.26,0.0
+128,5428,"edm::Event::commit_(std::vector<unsigned int, std::allocator<unsigned int> > const&, edm::Hash<5>*)",0.27,0.0
+129,5696,"EcalRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",0.24,0.0
+130,5697,"EleIsoDetIdCollectionProducer::produce(edm::Event&, edm::EventSetup const&)",0.24,0.0
+131,5698,"sistrip::RawToDigiModule::produce(edm::Event&, edm::EventSetup const&)",0.24,0.0
+132,5780,"TICLSeedingRegionProducer::produce(edm::Event&, edm::EventSetup const&)",0.23,0.0
+133,6023,"HFPhase1Reconstructor::produce(edm::Event&, edm::EventSetup const&)",0.21,0.0
+134,6022,"HcalRawToDigi::produce(edm::Event&, edm::EventSetup const&)",0.21,0.0
+135,6024,"edm::FwdPtrProducer<reco::PFCandidate, reco::PFCandidateFwdPtrFactory>::produce(edm::Event&, edm::EventSetup const&)",0.21,0.0
+136,6191,"RecoTauPiZeroProducer::produce(edm::Event&, edm::EventSetup const&)",0.195,0.0
+137,6409,"MuonShowerInformationProducer::produce(edm::Event&, edm::EventSetup const&)",0.175,0.0
+138,6514,"reco::GlobalHaloDataProducer::produce(edm::Event&, edm::EventSetup const&)",0.165,0.0
+139,6778,"EcalDetailedTimeRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",0.145,0.0
+140,6777,"HFPreReconstructor::produce(edm::Event&, edm::EventSetup const&)",0.145,0.0
+141,7009,"MuonToTrackingParticleAssociatorEDProducer::produce(edm::Event&, edm::EventSetup const&)",0.13,0.0
+142,7088,"GEMSegmentProducer::produce(edm::Event&, edm::EventSetup const&)",0.125,0.0
+143,7090,"MeasurementTrackerEventProducer::produce(edm::Event&, edm::EventSetup const&)",0.125,0.0
+144,7089,"OutsideInMuonSeeder::produce(edm::Event&, edm::EventSetup const&)",0.125,0.0
+145,7419,"InterestingTrackEcalDetIdProducer::produce(edm::Event&, edm::EventSetup const&)",0.105,0.0
+146,7859,"DTRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",0.085,0.0
+147,7860,"DeepCMVATagInfoProducer::produce(edm::Event&, edm::EventSetup const&)",0.085,0.0
+148,8006,"SoftPFElectronTagInfoProducer::produce(edm::Event&, edm::EventSetup const&)",0.08,0.0
+149,8171,"EgammaSCCorrectionMaker::produce(edm::Event&, edm::EventSetup const&)",0.075,0.0
+150,8172,"ElectronIDExternalProducer<ElectronIDSelectorCutBased>::produce(edm::Event&, edm::EventSetup const&)",0.075,0.0
+151,8173,"JetPlusTrackAddonSeedProducer::produce(edm::Event&, edm::EventSetup const&)",0.075,0.0
+152,8524,"DeDxHitInfoProducer::produce(edm::Event&, edm::EventSetup const&)",0.065,0.0
+153,8523,"EcalDigiSelector::produce(edm::Event&, edm::EventSetup const&)",0.065,0.0
+154,8525,"JetTracksAssociatorExplicit::produce(edm::Event&, edm::EventSetup const&)",0.065,0.0
+155,8772,"CosmicMuonSeedGenerator::produce(edm::Event&, edm::EventSetup const&)",0.06,0.0
+156,8771,"JetExtender::produce(edm::Event&, edm::EventSetup const&)",0.06,0.0
+157,8997,"PFTauTransverseImpactParameters::produce(edm::Event&, edm::EventSetup const&)",0.055,0.0
+158,8996,"RecoTauPiZeroUnembedder::produce(edm::Event&, edm::EventSetup const&)",0.055,0.0
+159,8998,"edm::service::MessageLogger::unEstablishModule(edm::ModuleCallingContext const&, char const*)",0.055,0.0
+160,8004,edm::ModuleCallingContext::getStreamContext() const,0.08,0.0
+161,9251,"MuonSeedGenerator::produce(edm::Event&, edm::EventSetup const&)",0.05,0.0
+162,9253,"MuonSelectionTypeValueMapProducer::produce(edm::Event&, edm::EventSetup const&)",0.05,0.0
+163,9252,"PFConversionProducer::produce(edm::Event&, edm::EventSetup const&)",0.05,0.0
+164,9249,"PFV0Producer::produce(edm::Event&, edm::EventSetup const&)",0.05,0.0
+165,9254,edm::Event::~Event(),0.05,0.0
+166,9564,"EgammaEcalPFClusterIsolationProducer<reco::GsfElectron>::produce(edm::Event&, edm::EventSetup const&)",0.045,0.0
+167,9561,"ME0RecHitProducer::produce(edm::Event&, edm::EventSetup const&)",0.045,0.0
+168,9562,"MuIsoDepositCopyProducer::produce(edm::Event&, edm::EventSetup const&)",0.045,0.0
+169,9563,"TrackProducerWithSCAssociation::produce(edm::Event&, edm::EventSetup const&)",0.045,0.0
+170,9566,"l1t::L1TRawToDigi::produce(edm::Event&, edm::EventSetup const&)",0.045,0.0
+171,9917,"GEDGsfElectronFinalizer::produce(edm::Event&, edm::EventSetup const&)",0.04,0.0
+172,9919,"TrajectorySeedFromMuonProducer::produce(edm::Event&, edm::EventSetup const&)",0.04,0.0
+173,9918,"UnifiedSCCollectionProducer::produce(edm::Event&, edm::EventSetup const&)",0.04,0.0
+174,10280,"EgammaEcalPFClusterIsolationProducer<reco::Photon>::produce(edm::Event&, edm::EventSetup const&)",0.035,0.0
+175,10279,"GEMRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",0.035,0.0
+176,10278,"HcalHitSelection::produce(edm::Event&, edm::EventSetup const&)",0.035,0.0
+177,10282,edm::Event::setConsumer(edm::EDConsumerBase const*),0.035,0.0
+178,10749,"LowPtGsfElectronFinalizer::produce(edm::Event&, edm::EventSetup const&)",0.03,0.0
+179,10748,"RPCRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",0.03,0.0
+180,11225,"HcalHitReconstructor::produce(edm::Event&, edm::EventSetup const&)",0.025,0.0
+181,11228,"edm::Event::setProducer(edm::ProducerBase const*, std::vector<edm::BranchID, std::allocator<edm::BranchID> >*, std::vector<edm::BranchID, std::allocator<edm::BranchID> >*)",0.025,0.0
+182,11843,"SoftPFMuonTagInfoProducer::produce(edm::Event&, edm::EventSetup const&)",0.02,0.0
+183,11846,"edm::service::MessageLogger::establishModule(unsigned int, edm::ModuleCallingContext const&, char const*)",0.02,0.0
+184,12752,"DTuROSRawToDigi::produce(edm::Event&, edm::EventSetup const&)",0.015,0.0
+185,12754,"EgammaHcalPFClusterIsolationProducer<reco::GsfElectron>::produce(edm::Event&, edm::EventSetup const&)",0.015,0.0
+186,12755,"EgammaIsoHcalDetIdCollectionProducer::produce(edm::Event&, edm::EventSetup const&)",0.015,0.0
+187,12756,"cms::MuonMET::produce(edm::Event&, edm::EventSetup const&)",0.015,0.0
+188,294,_init,53.28,0.0
+189,12758,"edm::Event::Event(edm::EventPrincipal const&, edm::ModuleDescription const&, edm::ModuleCallingContext const*)",0.015,0.0
+190,14002,"EgammaHcalPFClusterIsolationProducer<reco::Photon>::produce(edm::Event&, edm::EventSetup const&)",0.01,0.0
+191,13999,"HFEMClusterProducer::produce(edm::Event&, edm::EventSetup const&)",0.01,0.0
+192,14000,"InterestingEcalDetIdProducer::produce(edm::Event&, edm::EventSetup const&)",0.01,0.0
+193,14001,"MuonReducedTrackExtraProducer::produce(edm::Event&, edm::EventSetup const&)",0.01,0.0
+194,13998,"void TotemVFATRawToDigi::run<edm::DetSetVector<TotemRPDigi> >(edm::Event&, edm::EventSetup const&)",0.01,0.0
+195,16512,"BeamSpotProducer::produce(edm::Event&, edm::EventSetup const&)",0.005,0.0
+196,16523,"CTPPSPixelRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",0.005,0.0
+197,16513,"ESRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",0.005,0.0
+198,16527,"EcalDetIdToBeRecoveredProducer::produce(edm::Event&, edm::EventSetup const&)",0.005,0.0
+199,16525,"HFRecoEcalCandidateProducer::produce(edm::Event&, edm::EventSetup const&)",0.005,0.0
+200,16521,"JetConstituentSelector<reco::PFJet, std::vector<edm::FwdPtr<reco::PFCandidate>, std::allocator<edm::FwdPtr<reco::PFCandidate> > > >::produce(edm::Event&, edm::EventSetup const&)",0.005,0.0
+201,16517,"L1ExtraParticlesProd::produce(edm::Event&, edm::EventSetup const&)",0.005,0.0
+202,16529,"LowPtGsfElectronSeedValueMapsProducer::produce(edm::Event&, edm::EventSetup const&)",0.005,0.0
+203,16520,"TotemRPRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",0.005,0.0
+204,16526,"TotemTimingLocalTrackFitter::produce(edm::Event&, edm::EventSetup const&)",0.005,0.0
+205,16522,"TrackMVAClassifierBase::produce(edm::Event&, edm::EventSetup const&)",0.005,0.0
+206,16572,"std::_Function_handler<void (edm::StreamContext const&, edm::ModuleCallingContext const&), std::_Bind<std::_Mem_fn<void (edm::service::MessageLogger::*)(edm::StreamContext const&, edm::ModuleCallingContext const&)> (edm::service::MessageLogger*, std::_Placeholder<1>, std::_Placeholder<2>)> >::_M_invoke(std::_Any_data const&, edm::StreamContext const&, edm::ModuleCallingContext const&)",0.005,0.0
+207,22,edm::PoolOutputModule::write(edm::EventForOutput const&),1886.87,22.06
+208,8004,edm::ModuleCallingContext::getStreamContext() const,0.08,0.0
+209,210,"ClusterTPAssociationProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",90.255,1.06
+210,1533,"HGCalRawToDigiFake::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",9.27,0.11
+211,1636,"SimPFProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",7.49,0.09
+212,1722,"TrackTimeValueMapProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",6.3,0.07
+213,1733,"GsfElectronCoreEcalDrivenProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",6.175,0.07
+214,1808,"PhotonIDValueMapProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",5.345,0.06
+215,2172,"ElectronSeedMerger::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",2.98,0.03
+216,2199,"PFRecoTauTagInfoProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",2.885,0.03
+217,2204,"SiPixelClusterShapeCacheProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",2.875,0.03
+218,2493,"(anonymous namespace)::DuplicateListMerger::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",2.1,0.02
+219,2941,"PixelClusterTagInfoProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",1.365,0.02
+220,3647,"(anonymous namespace)::TrackClusterRemoverPhase2::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",0.775,0.01
+221,3809,"Merger<std::vector<reco::PFCandidate, std::allocator<reco::PFCandidate> >, std::vector<reco::PFCandidate, std::allocator<reco::PFCandidate> >, edm::CopyPolicy<reco::PFCandidate> >::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",0.7,0.01
+222,4686,"PFEGammaProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",0.42,0.0
+223,5174,"LowPtGsfElectronIDProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",0.31,0.0
+224,6515,"LowPtGsfElectronCoreProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",0.165,0.0
+225,6780,"GEDGsfElectronCoreProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",0.145,0.0
+226,7768,"ChargedHadronPFTrackIsolationProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",0.09,0.0
+227,10284,"EcalBarrelClusterFastTimer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",0.035,0.0
+228,5428,"edm::Event::commit_(std::vector<unsigned int, std::allocator<unsigned int> > const&, edm::Hash<5>*)",0.27,0.0
+229,11232,"GEMRawToDigiModule::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",0.025,0.0
+230,11850,"PFTauSecondaryVertexProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",0.02,0.0
+231,8004,edm::ModuleCallingContext::getStreamContext() const,0.08,0.0
+232,10282,edm::Event::setConsumer(edm::EDConsumerBase const*),0.035,0.0
+233,12758,"edm::Event::Event(edm::EventPrincipal const&, edm::ModuleDescription const&, edm::ModuleCallingContext const*)",0.015,0.0
+234,16570,"GEDGsfElectronValueMapProducer::produce(edm::StreamID, edm::Event&, edm::EventSetup const&) const",0.005,0.0
+235,3594,"edm::FwdPtrCollectionFilter<reco::PFCandidate, reco::PdgIdSelectorHandler, reco::PFCandidateWithSrcPtrFactory>::filter(edm::Event&, edm::EventSetup const&)",0.81,0.01
+236,8995,"ObjectSelector<SingleElementCollectionSelector<std::vector<reco::Vertex, std::allocator<reco::Vertex> >, StringCutObjectSelector<reco::Vertex, false>, std::vector<reco::Vertex, std::allocator<reco::Vertex> >, std::vector<reco::Vertex const*, std::allocator<reco::Vertex const*> >, helper::SelectionPointerAdder<std::vector<reco::Vertex const*, std::allocator<reco::Vertex const*> > > >, std::vector<reco::Vertex, std::allocator<reco::Vertex> >, NonNullNumberSelector, helper::NullPostProcessor<std::vector<reco::Vertex, std::allocator<reco::Vertex> >, edm::stream::EDFilter<> >, helper::CollectionStoreManager<std::vector<reco::Vertex, std::allocator<reco::Vertex> >, helper::IteratorToObjectConverter<std::vector<reco::Vertex, std::allocator<reco::Vertex> > > >, helper::ObjectSelectorBase<std::vector<reco::Vertex, std::allocator<reco::Vertex> >, edm::stream::EDFilter<> >, reco::modules::SingleElementCollectionSelectorEventSetupInit<SingleElementCollectionSelector<std::vector<reco::Vertex, std::allocator<reco::Vertex> >, StringCutObjectSelector<reco::Vertex, false>, std::vector<reco::Vertex, std::allocator<reco::Vertex> >, std::vector<reco::Vertex const*, std::allocator<reco::Vertex const*> >, helper::SelectionPointerAdder<std::vector<reco::Vertex const*, std::allocator<reco::Vertex const*> > > > > >::filter(edm::Event&, edm::EventSetup const&)",0.055,0.0

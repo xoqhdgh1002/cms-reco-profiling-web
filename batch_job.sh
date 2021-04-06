@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#python N01_compare_cpu.py CMSSW_11_3_0_pre2 CMSSW_11_3_0_pre3 step3 > comp_CMSSW_11_3_0_pre3_step3_CPU
+#python N01_compare_cpu.py CMSSW_11_3_0_pre3 CMSSW_11_3_0_pre4 step3 > comp_CMSSW_11_3_0_pre4_step3_CPU
+#python N01_compare_cpu.py CMSSW_11_3_0_pre4 CMSSW_11_3_0_pre5 step3 > comp_CMSSW_11_3_0_pre5_step3_CPU
+#python N01_compare_cpu.py CMSSW_11_3_0_pre2 CMSSW_11_3_0_pre3 step4 > comp_CMSSW_11_3_0_pre3_step4_CPU
+#python N01_compare_cpu.py CMSSW_11_3_0_pre3 CMSSW_11_3_0_pre4 step4 > comp_CMSSW_11_3_0_pre4_step4_CPU
+#python N01_compare_cpu.py CMSSW_11_3_0_pre4 CMSSW_11_3_0_pre5 step4 > comp_CMSSW_11_3_0_pre5_step4_CPU
+python N01_compare_mem.py CMSSW_11_3_0_pre2 CMSSW_11_3_0_pre3 step3 > comp_CMSSW_11_3_0_pre3_step3_MEM.99
+python N01_compare_mem.py CMSSW_11_3_0_pre3 CMSSW_11_3_0_pre4 step3 > comp_CMSSW_11_3_0_pre4_step3_MEM.99
+python N01_compare_mem.py CMSSW_11_3_0_pre4 CMSSW_11_3_0_pre5 step3 > comp_CMSSW_11_3_0_pre5_step3_MEM.99
+python N01_compare_mem.py CMSSW_11_3_0_pre2 CMSSW_11_3_0_pre3 step4 > comp_CMSSW_11_3_0_pre3_step4_MEM.99
+python N01_compare_mem.py CMSSW_11_3_0_pre3 CMSSW_11_3_0_pre4 step4 > comp_CMSSW_11_3_0_pre4_step4_MEM.99
+python N01_compare_mem.py CMSSW_11_3_0_pre4 CMSSW_11_3_0_pre5 step4 > comp_CMSSW_11_3_0_pre5_step4_MEM.99

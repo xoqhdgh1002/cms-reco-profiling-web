@@ -1,0 +1,53 @@
+Couldn't parse time report using CPU and wall-clock format: trying Wall-clock only
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   -0.309956      -0.01%         1.69 ms/ev ->         1.23 ms/ev reducedEgamma
+   -0.254499      -0.00%         0.88 ms/ev ->         0.68 ms/ev electronMVAValueMapProducer
+   -0.122425      -0.02%         5.38 ms/ev ->         4.76 ms/ev pfParticleNetJetTagsSlimmedAK8DeepTags
+   -0.119641      -0.02%         5.44 ms/ev ->         4.83 ms/ev ak4PFJetsLegacyHPSPiZerosBoosted
+   -0.110221      -0.62%       238.25 ms/ev ->       213.36 ms/ev hpsPFTauBasicDiscriminatorsdR03Boosted
+   -0.109816      -0.01%         5.29 ms/ev ->         4.74 ms/ev pfMassDecorrelatedParticleNetJetTagsSlimmedAK8DeepTags
+   -0.097736      -0.55%       236.74 ms/ev ->       214.68 ms/ev hpsPFTauBasicDiscriminatorsBoosted
+   -0.090980      -0.03%        14.01 ms/ev ->        12.79 ms/ev pfNoPileUpIsoPFBRECO
+   -0.089708      -0.01%         6.21 ms/ev ->         5.68 ms/ev pfImpactParameterAK8TagInfosAK8Puppi
+   -0.088500      -0.09%        40.90 ms/ev ->        37.43 ms/ev pfImpactParameterTagInfosPuppi
+   -0.077262      -0.15%        79.60 ms/ev ->        73.68 ms/ev muonPUPPINoLeptonsIsolation
+   -0.074059      -0.14%        79.58 ms/ev ->        73.89 ms/ev muonPUPPIIsolation
+   -0.071885      -0.01%         7.46 ms/ev ->         6.95 ms/ev pfImpactParameterTagInfosAK8Puppi
+   -0.070121      -0.03%        19.03 ms/ev ->        17.74 ms/ev pfNoPileUpJMENoHF
+   -0.065633      -0.04%        25.37 ms/ev ->        23.75 ms/ev muPFIsoDepositPUPAT
+   -0.064669      -0.26%       167.71 ms/ev ->       157.21 ms/ev MINIAODSIMoutput
+   +0.063315      +0.03%        20.69 ms/ev ->        22.05 ms/ev hpsPFTauPrimaryVertexProducerBoosted
+   -0.062235      -0.26%       176.63 ms/ev ->       165.97 ms/ev combinatoricRecoTausBoosted
+   -0.058428      -0.37%       266.16 ms/ev ->       251.05 ms/ev hgcPhotonID
+   -0.055556      -0.41%       303.81 ms/ev ->       287.38 ms/ev hgcElectronID
+   -0.055419      -0.05%        37.96 ms/ev ->        35.91 ms/ev deepTau2017v2p1
+  ---------- ------------     --------                  ----       ------------
+Job total:  4.03521 s/ev ==> 3.89246 s/ev
+
+The same excluding the first 1 events
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   +1.372343      +0.00%         0.02 ms/ev ->         0.13 ms/ev pfElectrons
+   -0.344177      -0.01%         1.52 ms/ev ->         1.07 ms/ev reducedEgamma
+   -0.224359      -0.00%         0.82 ms/ev ->         0.65 ms/ev electronMVAValueMapProducer
+   -0.122359      -0.02%         5.44 ms/ev ->         4.81 ms/ev pfParticleNetJetTagsSlimmedAK8DeepTags
+   -0.119760      -0.02%         5.41 ms/ev ->         4.80 ms/ev ak4PFJetsLegacyHPSPiZerosBoosted
+   -0.109723      -0.01%         5.35 ms/ev ->         4.79 ms/ev pfMassDecorrelatedParticleNetJetTagsSlimmedAK8DeepTags
+   -0.108022      -0.61%       236.00 ms/ev ->       211.81 ms/ev hpsPFTauBasicDiscriminatorsdR03Boosted
+   -0.095333      -0.54%       234.45 ms/ev ->       213.12 ms/ev hpsPFTauBasicDiscriminatorsBoosted
+   -0.088327      -0.03%        13.86 ms/ev ->        12.69 ms/ev pfNoPileUpIsoPFBRECO
+   -0.087691      -0.01%         6.09 ms/ev ->         5.58 ms/ev pfImpactParameterAK8TagInfosAK8Puppi
+   -0.084801      -0.08%        40.34 ms/ev ->        37.05 ms/ev pfImpactParameterTagInfosPuppi
+   -0.072308      -0.14%        78.72 ms/ev ->        73.23 ms/ev muonPUPPINoLeptonsIsolation
+   -0.071043      -0.06%        36.64 ms/ev ->        34.12 ms/ev deepTau2017v2p1
+   -0.069009      -0.13%        78.70 ms/ev ->        73.45 ms/ev muonPUPPIIsolation
+   -0.068609      -0.01%         7.31 ms/ev ->         6.82 ms/ev pfImpactParameterTagInfosAK8Puppi
+   -0.067218      -0.03%        18.83 ms/ev ->        17.60 ms/ev pfNoPileUpJMENoHF
+   +0.065030      +0.03%        20.34 ms/ev ->        21.70 ms/ev hpsPFTauPrimaryVertexProducerBoosted
+   -0.062659      -0.27%       175.11 ms/ev ->       164.47 ms/ev combinatoricRecoTausBoosted
+   -0.060227      -0.04%        25.08 ms/ev ->        23.61 ms/ev muPFIsoDepositPUPAT
+   -0.057615      -0.37%       263.96 ms/ev ->       249.18 ms/ev hgcPhotonID
+   -0.055894      -0.41%       301.26 ms/ev ->       284.88 ms/ev hgcElectronID
+  ---------- ------------     --------                  ----       ------------
+Job total:  3.96139 s/ev ==> 3.83468 s/ev

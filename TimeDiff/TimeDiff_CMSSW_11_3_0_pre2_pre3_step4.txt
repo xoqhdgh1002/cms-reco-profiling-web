@@ -1,0 +1,100 @@
+Couldn't parse time report using CPU and wall-clock format: trying Wall-clock only
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   +1.106016      +3.16%        44.65 ms/ev ->       155.12 ms/ev isolatedTracks
+   -0.684962      -0.12%         8.46 ms/ev ->         4.15 ms/ev lostTracks
+   +0.501096      +2.02%       105.86 ms/ev ->       176.63 ms/ev combinatoricRecoTausBoosted
+   -0.482490      -0.01%         0.64 ms/ev ->         0.39 ms/ev muPFIsoDepositNeutralPAT
+   -0.472077      -0.25%        22.66 ms/ev ->        14.01 ms/ev pfNoPileUpIsoPFBRECO
+   +0.465053      +0.11%         6.45 ms/ev ->        10.36 ms/ev hpsPFTauProducerSansRefsBoosted
+   +0.370963      +2.13%       163.69 ms/ev ->       238.25 ms/ev hpsPFTauBasicDiscriminatorsdR03Boosted
+   +0.361914      +1.05%        83.05 ms/ev ->       119.75 ms/ev patPFMet
+   +0.361390      +1.05%        83.20 ms/ev ->       119.90 ms/ev patMETs
+   +0.360909      +0.02%         1.80 ms/ev ->         2.60 ms/ev hpsSelectionDiscriminatorBoosted
+   +0.356327      +2.05%       165.14 ms/ev ->       236.74 ms/ev hpsPFTauBasicDiscriminatorsBoosted
+   +0.320595      +0.32%        29.60 ms/ev ->        40.90 ms/ev pfImpactParameterTagInfosPuppi
+   +0.297973      +0.07%         6.82 ms/ev ->         9.21 ms/ev pfParticleNetAK4TagInfosSlimmedDeepFlavour
+   +0.283497      +0.04%         3.76 ms/ev ->         5.00 ms/ev pfSecondaryVertexTagInfosPuppi
+   +0.261941      +0.02%         1.97 ms/ev ->         2.57 ms/ev pfDeepFlavourTagInfosSlimmedDeepFlavour
+   +0.259974      +0.01%         0.68 ms/ev ->         0.88 ms/ev pfCombinedInclusiveSecondaryVertexV2BJetTagsPuppi
+   +0.253297      +1.17%       140.89 ms/ev ->       181.75 ms/ev pfParticleNetAK4JetTagsSlimmedDeepFlavour
+   +0.247086      +0.00%         0.56 ms/ev ->         0.72 ms/ev pfDeepCSVTagInfosPuppi
+   +0.246236      +0.00%         0.49 ms/ev ->         0.63 ms/ev slimmedMuonTrackExtras
+   +0.243838      +0.01%         1.34 ms/ev ->         1.71 ms/ev pfCombinedMVAV2BJetTagsPuppi
+   +0.238315      +0.01%         0.67 ms/ev ->         0.85 ms/ev pfCombinedSecondaryVertexV2BJetTagsPuppi
+   +0.227648      +0.01%         1.34 ms/ev ->         1.69 ms/ev reducedEgamma
+   -0.217941      -0.01%         0.92 ms/ev ->         0.74 ms/ev shiftedPatPhotonEnDown
+   -0.217822      -0.00%         0.73 ms/ev ->         0.58 ms/ev muPFIsoDepositChargedAllPAT
+   -0.203468      -0.01%         0.95 ms/ev ->         0.78 ms/ev shiftedPatPhotonEnUp
+   -0.201107      -0.03%         5.27 ms/ev ->         4.31 ms/ev muPFIsoDepositGammaPAT
+   +0.164487      +0.06%        10.77 ms/ev ->        12.71 ms/ev pfRecoTauTagInfoProducerBoosted
+   +0.158482      +0.21%        42.11 ms/ev ->        49.36 ms/ev ak4PFJetsRecoTauChargedHadronsBoosted
+   +0.152096      +0.03%         5.52 ms/ev ->         6.43 ms/ev boostedTauSeeds
+   +0.147970      +0.15%        32.73 ms/ev ->        37.96 ms/ev deepTau2017v2p1
+   +0.131842      +0.08%        20.29 ms/ev ->        23.15 ms/ev recoTauAK4PFJets08RegionBoosted
+   +0.127747      +0.09%        22.32 ms/ev ->        25.37 ms/ev muPFIsoDepositPUPAT
+   +0.111893      +0.12%        36.71 ms/ev ->        41.06 ms/ev pfImpactParameterTagInfosSlimmedDeepFlavour
+   +0.106549      +0.02%         5.58 ms/ev ->         6.21 ms/ev pfImpactParameterAK8TagInfosAK8Puppi
+   +0.089518      +0.02%         6.74 ms/ev ->         7.38 ms/ev patTaus
+   +0.084123      +0.04%        17.49 ms/ev ->        19.03 ms/ev pfNoPileUpJMENoHF
+   +0.078519      +0.02%         6.90 ms/ev ->         7.46 ms/ev pfImpactParameterTagInfosAK8Puppi
+   +0.064561      +0.05%        24.88 ms/ev ->        26.54 ms/ev pfDeepFlavourJetTagsSlimmedDeepFlavour
+   +0.056910      +0.23%       136.66 ms/ev ->       144.66 ms/ev patMuons
+   -0.056786      -0.01%         6.08 ms/ev ->         5.75 ms/ev shiftedPatUnclusteredEnUp
+   -0.054955      -0.01%         6.04 ms/ev ->         5.72 ms/ev shiftedPatUnclusteredEnDown
+   +0.050081      +0.10%        68.04 ms/ev ->        71.53 ms/ev hgcalRecHitMapProducer
+  ---------- ------------     --------                  ----       ------------
+Job total:  3.49819 s/ev ==> 4.03521 s/ev
+
+The same excluding the first 1 events
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   +1.108318      +3.20%        44.14 ms/ev ->       153.87 ms/ev isolatedTracks
+   -0.682567      -0.12%         8.33 ms/ev ->         4.09 ms/ev lostTracks
+   +0.505102      +2.06%       104.50 ms/ev ->       175.11 ms/ev combinatoricRecoTausBoosted
+   -0.482499      -0.01%         0.63 ms/ev ->         0.39 ms/ev muPFIsoDepositNeutralPAT
+   +0.469111      +0.11%         6.37 ms/ev ->        10.27 ms/ev hpsPFTauProducerSansRefsBoosted
+   -0.468213      -0.25%        22.33 ms/ev ->        13.86 ms/ev pfNoPileUpIsoPFBRECO
+   +0.376178      +2.18%       161.28 ms/ev ->       236.00 ms/ev hpsPFTauBasicDiscriminatorsdR03Boosted
+   +0.365465      +0.02%         1.78 ms/ev ->         2.58 ms/ev hpsSelectionDiscriminatorBoosted
+   +0.361283      +2.09%       162.71 ms/ev ->       234.45 ms/ev hpsPFTauBasicDiscriminatorsBoosted
+   +0.357691      +1.05%        82.53 ms/ev ->       118.48 ms/ev patPFMet
+   +0.357091      +1.05%        82.68 ms/ev ->       118.61 ms/ev patMETs
+   +0.322177      +0.33%        29.14 ms/ev ->        40.34 ms/ev pfImpactParameterTagInfosPuppi
+   +0.308327      +0.04%         3.61 ms/ev ->         4.92 ms/ev pfSecondaryVertexTagInfosPuppi
+   +0.290442      +0.07%         6.78 ms/ev ->         9.08 ms/ev pfParticleNetAK4TagInfosSlimmedDeepFlavour
+   +0.287540      +0.01%         1.32 ms/ev ->         1.76 ms/ev pfCombinedCvsLJetTagsPuppi
+   +0.284210      +0.00%         0.46 ms/ev ->         0.62 ms/ev slimmedMuonTrackExtras
+   +0.266574      +0.01%         0.66 ms/ev ->         0.87 ms/ev pfCombinedInclusiveSecondaryVertexV2BJetTagsPuppi
+   +0.264238      +0.01%         1.05 ms/ev ->         1.37 ms/ev pfCombinedCvsBJetTagsPuppi
+   +0.261150      +0.02%         1.93 ms/ev ->         2.51 ms/ev pfDeepFlavourTagInfosSlimmedDeepFlavour
+   +0.254388      +0.00%         0.55 ms/ev ->         0.71 ms/ev pfDeepCSVTagInfosPuppi
+   +0.254047      +0.01%         1.18 ms/ev ->         1.52 ms/ev reducedEgamma
+   +0.249043      +0.01%         1.31 ms/ev ->         1.69 ms/ev pfCombinedMVAV2BJetTagsPuppi
+   +0.246542      +1.15%       139.94 ms/ev ->       179.29 ms/ev pfParticleNetAK4JetTagsSlimmedDeepFlavour
+   +0.244148      +0.01%         0.66 ms/ev ->         0.84 ms/ev pfCombinedSecondaryVertexV2BJetTagsPuppi
+   -0.215560      -0.00%         0.72 ms/ev ->         0.58 ms/ev muPFIsoDepositChargedAllPAT
+   -0.214858      -0.01%         0.91 ms/ev ->         0.73 ms/ev shiftedPatPhotonEnDown
+   +0.201809      +0.01%         0.79 ms/ev ->         0.96 ms/ev hpsPFTauDiscriminationByIsolationMVArun2v1DBdR03oldDMwLTrawBoosted
+   -0.200408      -0.00%         0.94 ms/ev ->         0.77 ms/ev shiftedPatPhotonEnUp
+   +0.168978      +0.06%        10.62 ms/ev ->        12.58 ms/ev pfRecoTauTagInfoProducerBoosted
+   +0.163489      +0.22%        41.47 ms/ev ->        48.85 ms/ev ak4PFJetsRecoTauChargedHadronsBoosted
+   +0.162996      +0.03%         5.41 ms/ev ->         6.37 ms/ev boostedTauSeeds
+   +0.160111      +0.02%         4.63 ms/ev ->         5.44 ms/ev pfParticleNetJetTagsSlimmedAK8DeepTags
+   +0.158056      +0.16%        31.27 ms/ev ->        36.64 ms/ev deepTau2017v2p1
+   +0.137693      +0.09%        19.98 ms/ev ->        22.93 ms/ev recoTauAK4PFJets08RegionBoosted
+   +0.131995      +0.09%        21.97 ms/ev ->        25.08 ms/ev muPFIsoDepositPUPAT
+   +0.109671      +0.02%         5.46 ms/ev ->         6.09 ms/ev pfImpactParameterAK8TagInfosAK8Puppi
+   +0.108654      +0.12%        36.40 ms/ev ->        40.58 ms/ev pfImpactParameterTagInfosSlimmedDeepFlavour
+   +0.092826      +0.02%         6.49 ms/ev ->         7.12 ms/ev patTaus
+   +0.088805      +0.05%        17.23 ms/ev ->        18.83 ms/ev pfNoPileUpJMENoHF
+   +0.080693      +0.02%         6.74 ms/ev ->         7.31 ms/ev pfImpactParameterTagInfosAK8Puppi
+   +0.061583      +0.01%         5.08 ms/ev ->         5.41 ms/ev ak4PFJetsLegacyHPSPiZerosBoosted
+   +0.059834      +0.04%        24.66 ms/ev ->        26.19 ms/ev pfDeepFlavourJetTagsSlimmedDeepFlavour
+   +0.059260      +0.24%       134.78 ms/ev ->       143.01 ms/ev patMuons
+   -0.052409      -0.01%         5.96 ms/ev ->         5.66 ms/ev shiftedPatUnclusteredEnDown
+   -0.052169      -0.01%         6.00 ms/ev ->         5.69 ms/ev shiftedPatUnclusteredEnUp
+   +0.051922      +0.01%         5.00 ms/ev ->         5.27 ms/ev QGTagger
+   +0.051857      +0.10%        67.33 ms/ev ->        70.91 ms/ev hgcalRecHitMapProducer
+  ---------- ------------     --------                  ----       ------------
+Job total:  3.4286 s/ev ==> 3.96139 s/ev

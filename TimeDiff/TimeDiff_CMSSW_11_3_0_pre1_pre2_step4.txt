@@ -1,0 +1,57 @@
+Couldn't parse time report using CPU and wall-clock format: trying Wall-clock only
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   -0.368165      -0.02%         1.95 ms/ev ->         1.34 ms/ev reducedEgamma
+   -0.111567      -0.66%       228.22 ms/ev ->       204.11 ms/ev primaryVertexAssociation
+   -0.104374      -0.12%        45.60 ms/ev ->        41.07 ms/ev pileupJetId
+   -0.085619      -0.02%         9.22 ms/ev ->         8.46 ms/ev lostTracks
+   -0.078716      -0.05%        24.15 ms/ev ->        22.32 ms/ev muPFIsoDepositPUPAT
+   -0.076291      -0.01%         5.69 ms/ev ->         5.27 ms/ev muPFIsoDepositGammaPAT
+   -0.069595      -0.32%       175.50 ms/ev ->       163.69 ms/ev hpsPFTauBasicDiscriminatorsdR03Boosted
+   -0.068885      -0.16%        85.91 ms/ev ->        80.19 ms/ev muonPUPPIIsolation
+   -0.068663      -0.32%       176.88 ms/ev ->       165.14 ms/ev hpsPFTauBasicDiscriminatorsBoosted
+   -0.066915      -0.15%        85.81 ms/ev ->        80.25 ms/ev muonPUPPINoLeptonsIsolation
+   -0.064760      -0.25%       145.80 ms/ev ->       136.66 ms/ev patMuons
+   -0.063066      -0.03%        18.63 ms/ev ->        17.49 ms/ev pfNoPileUpJMENoHF
+   -0.059003      -0.01%         5.72 ms/ev ->         5.39 ms/ev ak4PFJetsLegacyHPSPiZerosBoosted
+   -0.054762      -0.41%       278.56 ms/ev ->       263.71 ms/ev hgcPhotonID
+   -0.051946      -0.07%        47.03 ms/ev ->        44.65 ms/ev isolatedTracks
+   -0.051778      -0.01%         6.36 ms/ev ->         6.04 ms/ev shiftedPatUnclusteredEnDown
+   -0.051145      -0.02%        12.31 ms/ev ->        11.70 ms/ev patElectronsFromMultiCl
+   -0.050621      -0.01%         6.36 ms/ev ->         6.05 ms/ev shiftedPatUnclusteredEnUpPuppi
+  ---------- ------------     --------                  ----       ------------
+Job total:  3.63207 s/ev ==> 3.49819 s/ev
+
+The same excluding the first 1 events
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   -0.286018      -0.01%         1.57 ms/ev ->         1.18 ms/ev reducedEgamma
+   -0.116048      -0.70%       226.00 ms/ev ->       201.22 ms/ev primaryVertexAssociation
+   -0.106377      -0.13%        45.02 ms/ev ->        40.47 ms/ev pileupJetId
+   -0.101150      -0.02%         5.62 ms/ev ->         5.08 ms/ev ak4PFJetsLegacyHPSPiZerosBoosted
+   -0.091872      -0.02%         9.13 ms/ev ->         8.33 ms/ev lostTracks
+   -0.084710      -0.05%        23.91 ms/ev ->        21.97 ms/ev muPFIsoDepositPUPAT
+   -0.079680      -0.01%         5.63 ms/ev ->         5.20 ms/ev muPFIsoDepositGammaPAT
+   -0.074729      -0.35%       173.80 ms/ev ->       161.28 ms/ev hpsPFTauBasicDiscriminatorsdR03Boosted
+   -0.073402      -0.35%       175.11 ms/ev ->       162.71 ms/ev hpsPFTauBasicDiscriminatorsBoosted
+   -0.071972      -0.17%        85.04 ms/ev ->        79.13 ms/ev muonPUPPIIsolation
+   -0.070134      -0.16%        84.96 ms/ev ->        79.20 ms/ev muonPUPPINoLeptonsIsolation
+   -0.068783      -0.03%        18.45 ms/ev ->        17.23 ms/ev pfNoPileUpJMENoHF
+   -0.067531      -0.26%       144.20 ms/ev ->       134.78 ms/ev patMuons
+   -0.058622      -0.02%        11.95 ms/ev ->        11.27 ms/ev patElectronsFromMultiCl
+   -0.058043      -0.44%       275.66 ms/ev ->       260.11 ms/ev hgcPhotonID
+   -0.055452      -0.01%         6.30 ms/ev ->         5.96 ms/ev shiftedPatUnclusteredEnDown
+   -0.054570      -0.31%       205.51 ms/ev ->       194.60 ms/ev pfPileUpIsoPFBRECO
+   -0.054568      -0.22%       149.74 ms/ev ->       141.79 ms/ev pfPileUpJMENoHF
+   -0.054077      -0.01%         6.33 ms/ev ->         6.00 ms/ev shiftedPatUnclusteredEnUp
+   -0.054050      -0.01%         5.28 ms/ev ->         5.00 ms/ev QGTagger
+   -0.053732      -0.01%         6.30 ms/ev ->         5.97 ms/ev shiftedPatUnclusteredEnUpPuppi
+   -0.052750      -0.01%         5.75 ms/ev ->         5.46 ms/ev pfImpactParameterAK8TagInfosAK8Puppi
+   -0.052685      -0.01%         6.28 ms/ev ->         5.95 ms/ev shiftedPatUnclusteredEnDownPuppi
+   -0.052597      -0.03%        21.05 ms/ev ->        19.98 ms/ev recoTauAK4PFJets08RegionBoosted
+   -0.051999      -0.02%        11.19 ms/ev ->        10.62 ms/ev pfRecoTauTagInfoProducerBoosted
+   -0.051682      -0.25%       173.34 ms/ev ->       164.61 ms/ev pfCandidateToVertexAssociation
+   -0.051078      -0.06%        46.45 ms/ev ->        44.14 ms/ev isolatedTracks
+   -0.050643      -0.01%         7.09 ms/ev ->         6.74 ms/ev pfImpactParameterTagInfosAK8Puppi
+  ---------- ------------     --------                  ----       ------------
+Job total:  3.56143 s/ev ==> 3.4286 s/ev

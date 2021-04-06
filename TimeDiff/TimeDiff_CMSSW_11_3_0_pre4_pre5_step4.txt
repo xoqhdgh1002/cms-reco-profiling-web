@@ -1,0 +1,50 @@
+Couldn't parse time report using CPU and wall-clock format: trying Wall-clock only
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   -0.281930      -0.00%         0.60 ms/ev ->         0.45 ms/ev slimmedMuonTrackExtras
+   +0.263608      +0.04%         4.83 ms/ev ->         6.29 ms/ev ak4PFJetsLegacyHPSPiZerosBoosted
+   +0.200643      +1.23%       214.68 ms/ev ->       262.56 ms/ev hpsPFTauBasicDiscriminatorsBoosted
+   +0.200009      +1.22%       213.36 ms/ev ->       260.77 ms/ev hpsPFTauBasicDiscriminatorsdR03Boosted
+   +0.147000      +0.10%        23.75 ms/ev ->        27.52 ms/ev muPFIsoDepositPUPAT
+   +0.137357      +0.16%        43.45 ms/ev ->        49.86 ms/ev pileupJetId
+   +0.131300      +0.02%         4.72 ms/ev ->         5.38 ms/ev patMETsPuppi
+   +0.125698      +0.48%       139.55 ms/ev ->       158.27 ms/ev patMuons
+   +0.113771      +0.02%         4.92 ms/ev ->         5.52 ms/ev pfSecondaryVertexTagInfosPuppi
+   +0.101372      +0.02%         5.68 ms/ev ->         6.28 ms/ev pfImpactParameterAK8TagInfosAK8Puppi
+   +0.096843      +0.19%        73.68 ms/ev ->        81.17 ms/ev muonPUPPINoLeptonsIsolation
+   +0.093733      +0.19%        73.89 ms/ev ->        81.16 ms/ev muonPUPPIIsolation
+   +0.092924      +0.02%         6.95 ms/ev ->         7.62 ms/ev pfImpactParameterTagInfosAK8Puppi
+   +0.089166      +0.03%        12.41 ms/ev ->        13.57 ms/ev pfRecoTauTagInfoProducerBoosted
+   +0.085322      +0.09%        37.43 ms/ev ->        40.77 ms/ev pfImpactParameterTagInfosPuppi
+   +0.065803      +0.29%       165.97 ms/ev ->       177.27 ms/ev combinatoricRecoTausBoosted
+   +0.064560      +0.02%         9.92 ms/ev ->        10.59 ms/ev hpsPFTauProducerSansRefsBoosted
+   +0.063906      +0.27%       157.21 ms/ev ->       167.58 ms/ev MINIAODSIMoutput
+   +0.052021      +0.07%        48.04 ms/ev ->        50.61 ms/ev ak4PFJetsRecoTauChargedHadronsBoosted
+  ---------- ------------     --------                  ----       ------------
+Job total:  3.89246 s/ev ==> 4.11159 s/ev
+
+The same excluding the first 1 events
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   -1.505345      -0.00%         0.13 ms/ev ->         0.02 ms/ev pfElectrons
+   -0.291669      -0.00%         0.59 ms/ev ->         0.44 ms/ev slimmedMuonTrackExtras
+   +0.228745      +0.03%         4.80 ms/ev ->         6.03 ms/ev ak4PFJetsLegacyHPSPiZerosBoosted
+   +0.216345      +0.01%         1.07 ms/ev ->         1.33 ms/ev reducedEgamma
+   +0.200011      +1.24%       213.12 ms/ev ->       260.48 ms/ev hpsPFTauBasicDiscriminatorsBoosted
+   +0.199292      +1.22%       211.81 ms/ev ->       258.70 ms/ev hpsPFTauBasicDiscriminatorsdR03Boosted
+   +0.141709      +0.09%        23.61 ms/ev ->        27.21 ms/ev muPFIsoDepositPUPAT
+   +0.137694      +0.17%        43.15 ms/ev ->        49.53 ms/ev pileupJetId
+   +0.124381      +0.02%         4.84 ms/ev ->         5.48 ms/ev pfSecondaryVertexTagInfosPuppi
+   +0.120116      +0.46%       138.62 ms/ev ->       156.33 ms/ev patMuons
+   +0.102113      +0.02%         5.58 ms/ev ->         6.18 ms/ev pfImpactParameterAK8TagInfosAK8Puppi
+   +0.093637      +0.09%        37.05 ms/ev ->        40.69 ms/ev pfImpactParameterTagInfosPuppi
+   +0.092964      +0.02%         6.82 ms/ev ->         7.49 ms/ev pfImpactParameterTagInfosAK8Puppi
+   +0.090774      +0.18%        73.23 ms/ev ->        80.19 ms/ev muonPUPPINoLeptonsIsolation
+   +0.088922      +0.03%        12.31 ms/ev ->        13.45 ms/ev pfRecoTauTagInfoProducerBoosted
+   +0.087718      +0.18%        73.45 ms/ev ->        80.18 ms/ev muonPUPPIIsolation
+   +0.065109      +0.29%       164.47 ms/ev ->       175.54 ms/ev combinatoricRecoTausBoosted
+   +0.063104      +0.02%         9.84 ms/ev ->        10.48 ms/ev hpsPFTauProducerSansRefsBoosted
+   +0.051452      +0.07%        47.66 ms/ev ->        50.18 ms/ev ak4PFJetsRecoTauChargedHadronsBoosted
+   -0.050543      -0.20%       156.18 ms/ev ->       148.48 ms/ev MINIAODSIMoutput
+  ---------- ------------     --------                  ----       ------------
+Job total:  3.83468 s/ev ==> 4.03218 s/ev
