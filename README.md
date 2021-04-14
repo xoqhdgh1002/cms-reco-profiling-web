@@ -1,6 +1,7 @@
 #
 
 Contents of the http://cms-reco-profiling.web.cern.ch/cms-reco-profiling/web page.
+The contents of the web page are described in the [spec.md](spec.md).
 
 ## Workflow
 
