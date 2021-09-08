@@ -6,7 +6,7 @@ data_path = '/eos/cms/store/user/cmsbuild/profiling/data/'
 result_path = '/eos/project/c/cmsweb/www/reco-prof/results/Time_Mem_Summary/'
 Log = Log_check.TimeMem()
 
-yaml_file = yaml.load(open('test.yaml','r'))
+yaml_file = yaml.load(open('data.yaml','r'))
 for step in ['step3','step4']:
 	for cmssw in yaml_file:
 		for workflow in yaml_file[cmssw]["workflow"]:

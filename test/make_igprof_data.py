@@ -13,15 +13,18 @@ for datatype in ['cpu_endjob','mem_live.1','mem_live.99']:
 	        for cmssw in yaml_file:
 	                for workflow in yaml_file[cmssw]["workflow"]:
 				path = "{0}/{1}/{2}/{3}/{4}.sql3".format(data_path,cmssw,workflow,step,datatype)
+				print(path)
 				if os.path.isfile(path):
 					csv_name = "./comp_igprof/{0}/{1}/{2}/{3}.csv".format(cmssw,workflow,step,datatype)
 					
 					conn = sqlite3.connect(path)
 					cur = conn.cursor()
-					
-					cur.execute("SELECT summary.tick_period FROM summary")
-					tick_period = cur.fetchone()[0]
-					
+					if datatype == "cpu_endjob":					
+						cur.execute("SELECT summary.tick_period FROM summary")
+						tick_period = cur.fetchone()[0]
+					else:
+						tick_period = 1
+
 					cur.execute("SELECT symbols.name, mainrows.cumulative_count FROM symbols INNER JOIN mainrows ON mainrows.symbol_id IN (symbols.id)")
 					spont = cur.fetchone()
 					
@@ -45,16 +48,16 @@ for datatype in ['cpu_endjob','mem_live.1','mem_live.99']:
 								""" % row[1])
 					
 						child += cur.fetchall()
-					
+
+					print(len(child),os.path.isfile(path))
+					if len(child) == 0:
+						continue				
+	
 					child = pd.DataFrame(child)
 					child.columns = ['name','cumulative','pct']
-					child['cumulative'] = child['cumulative']
-					if datatype == "cpu_endjob":
-						child['cumulative'] = child['cumulative']*tick_period
+					child['cumulative'] = child['cumulative']*tick_period
 					child.sort_values(by=['cumulative'],axis=0,ascending=False,inplace=True)
-					child['spontaneous'] = spont[1]
-					if datatype == "cpu_endjob":
-						child['spontaneous'] = spont[1]*tick_period 
+					child['spontaneous'] = spont[1]*tick_period 
 					
 					child = child[~child["name"].str.contains("edm::service::Timing::postModuleEvent")] 
 					child = child[~child["name"].str.contains("edm::Event::commit_")]
