@@ -1,0 +1,6 @@
+export SCRAM_ARCH=slc7_amd64_gcc900
+export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
+source $VO_CMS_SW_DIR/cmsset_default.sh
+cd /cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_0_pre6/src
+cmsenv
+cd -
