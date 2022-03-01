@@ -32,4 +32,4 @@ if __name__ == "__main__":
 	
 		if os.path.isfile(tmi):
 			Log.Get_TimeMem(tmi)
-			Log.summary("{}.txt".format(step))
+			Log.summary("{0}/{1}.txt".format(release,step))
