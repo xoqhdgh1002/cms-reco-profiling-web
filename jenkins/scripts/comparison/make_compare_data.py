@@ -28,8 +28,8 @@ if operator == "N04_compareProducts.sh":
 
 for step in ['step3','step4','step5']:
 	
-	new_data = os.path.join(data_path,new,new_architecture,'{}_TimeMemoryInfo.log'.format(step))
-	old_data = os.path.join(data_path,old,old_architecture,'{}_TimeMemoryInfo.log'.format(step))
+	new_data = os.path.join(data_path,new,new_architecture,workflow,'{}_TimeMemoryInfo.log'.format(step))
+	old_data = os.path.join(data_path,old,old_architecture,workflow,'{}_TimeMemoryInfo.log'.format(step))
 
 	os.makedirs(result_path,exist_ok = True)
 	if os.path.isfile(new_data) and os.path.isfile(old_data):
