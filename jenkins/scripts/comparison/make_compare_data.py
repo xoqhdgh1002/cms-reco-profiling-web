@@ -32,7 +32,7 @@ for step in ['step3','step4','step5']:
 	old_data = os.path.join(data_path,old,old_architecture,'{}_TimeMemoryInfo.log'.format(step))
 
 	os.makedirs(result_path,exist_ok = True)
-	if os.path.isfile(file_path_1) and os.path.isfile(file_path_2):
+	if os.path.isfile(new_data) and os.path.isfile(old_data):
 		os.system("source ./{8} {0}{2}/{3}/{6}/{7} {0}{4}/{5}/{6}/{7} > {1}{7}.txt".format(
 		data_path,result_path,
 		old,old_architecture,
