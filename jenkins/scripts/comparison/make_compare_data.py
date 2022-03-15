@@ -9,8 +9,8 @@ cmssw.sort(key = lambda x: (x.split('_')[1:4],10-len(x.split('_')),len(x)))
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--operator", type=str, help="operator", default=None)
-parser.add_argument("--release", type=str, help="CMSSW release", default=None)
 parser.add_argument("--workflow", type=str, help="workflow", default=None)
+parser.add_argument("--release", type=str, help="CMSSW release", default=None)
 args = parser.parse_args()
 
 new = args.release
@@ -20,11 +20,7 @@ old_architecture = os.listdir(os.path.join(data_path,old))[0]
 workflow = args.workflow
 operator = args.operator
 
-if operator == "N03_timeDiffFromReport.sh":
-	result_path = 'TimeDiff/'
-
-if operator == "N04_compareProducts.sh":
-	result_path = 'CompProd/'
+result_path = "{0}/{1}/{2}/".format(new,new_architecture,workflow)
 
 for step in ['step3','step4','step5']:
 	
