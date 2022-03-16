@@ -24,18 +24,18 @@ refer_cmssw = cmssw[cmssw.index(refer_cmssw)-1]
 workflow = args.workflow
 
 for step in ['step3','step4','step5']:
-	if not os.path.isdir("{0}/{1}/{2}".format(target_cmssw,workflow,step)):
+	if not os.path.isdir("data/{0}/{1}/{2}".format(target_cmssw,workflow,step)):
 		continue
 	for data in ['.'.join(x.split('.')[:-1]) for x in os.listdir("{0}/{1}/{2}".format(target_cmssw,workflow,step))]:
-		target_path = "{0}/{1}/{2}/{3}.csv".format(target_cmssw,workflow,step,data)
-		refer_path  = "{0}/{1}/{2}/{3}.csv".format(refer_cmssw,workflow,step,data)
+		target_path = "data/{0}/{1}/{2}/{3}.csv".format(target_cmssw,workflow,step,data)
+		refer_path  = "data/{0}/{1}/{2}/{3}.csv".format(refer_cmssw,workflow,step,data)
 	
 		if os.path.isfile(target_path) and os.path.isfile(refer_path):
 	
 			target_df = pd.read_csv(target_path)
 			refer_df = pd.read_csv(refer_path)
-			os.makedirs("html/{0}/{1}/{2}".format(target_cmssw,workflow,step),exist_ok=True)
-			html_name = "html/{0}/{1}/{2}/{3}.html".format(target_cmssw,workflow,step,data)
+			os.makedirs("{0}/{1}/{2}".format(target_cmssw,workflow,step),exist_ok=True)
+			html_name = "{0}/{1}/{2}/{3}.html".format(target_cmssw,workflow,step,data)
 			main_title= "Igprof_{3} Comaprison : {1} VS {0} ({2})".format(target_cmssw,refer_cmssw,step,data)
 	
 			target_df.columns=["name","target_cumulative","target_pct","targe_spontaneous"]

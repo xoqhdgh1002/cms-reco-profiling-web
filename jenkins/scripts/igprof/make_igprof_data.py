@@ -22,7 +22,7 @@ for step in ['step3','step4','step5']:
 	for cmssw in [new,old]:
 		if not os.path.isdir("{0}/{1}/{2}/{3}/".format(data_path,cmssw,workflow,step)):
 			continue
-		dir_name = os.path.join(cmssw,workflow,step)
+		dir_name = os.path.join("data",cmssw,workflow,step)
 		os.makedirs(dir_name,exist_ok=True)
 		file_list = os.listdir("{0}/{1}/{2}/{3}/".format(data_path,cmssw,workflow,step))
 		if len(file_list) == 0:
@@ -38,7 +38,7 @@ for step in ['step3','step4','step5']:
 				continue
 	
 			path = "{0}/{1}/{2}/{3}/{4}".format(data_path,cmssw,workflow,step,datatype)
-			csv_name = "{0}/{1}/{2}/{3}.csv".format(cmssw,workflow,step,csv)
+			csv_name = "data/{0}/{1}/{2}/{3}.csv".format(cmssw,workflow,step,csv)
 
 			conn = sqlite3.connect(path)
 			cur = conn.cursor()
