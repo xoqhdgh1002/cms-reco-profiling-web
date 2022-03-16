@@ -20,7 +20,7 @@ parser.add_argument("--workflow", type=str, help="workflow", default=None)
 args = parser.parse_args()
 
 target_cmssw  = args.release
-refer_cmssw = cmssw[cmssw.index(refer_cmssw)-1]
+refer_cmssw = cmssw[cmssw.index(target_cmssw)-1]
 workflow = args.workflow
 
 for step in ['step3','step4','step5']:
