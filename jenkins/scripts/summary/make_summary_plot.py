@@ -58,9 +58,9 @@ for step in ['step3','step4','step5']:
 		df = log_object.Get_TimeMem(path)
 		hex_number = '#'+str(hex(random.randint(0,16777215)))[2:].zfill(6)
 
-		fig.add_trace(go.Scatter(x=df["event"],y=df["rss"],mode="lines",line=dict(color=hex_number),legendgroup=cmssw,hovertext=cmssw,name=cmssw),row=2,col=1)
-		fig.add_trace(go.Scatter(x=df["event"],y=df["vsize"],mode="lines",line=dict(color=hex_number),legendgroup=cmssw,hovertext=cmssw,name=cmssw,showlegend=False),row=2,col=2)
-		fig.add_trace(go.Scatter(x=df["event"],y=df["time"],mode="lines",line=dict(color=hex_number),legendgroup=cmssw,hovertext=cmssw,name=cmssw,showlegend=False),row=2,col=3)
+		fig.add_trace(go.Scatter(x=df["event"],y=df["rss"],mode="markers",marker=dict(color=hex_number),legendgroup=cmssw,hovertext=cmssw,name=cmssw),row=2,col=1)
+		fig.add_trace(go.Scatter(x=df["event"],y=df["vsize"],mode="markers",marker=dict(color=hex_number),legendgroup=cmssw,hovertext=cmssw,name=cmssw,showlegend=False),row=2,col=2)
+		fig.add_trace(go.Scatter(x=df["event"],y=df["time"],mode="markers",marker=dict(color=hex_number),legendgroup=cmssw,hovertext=cmssw,name=cmssw,showlegend=False),row=2,col=3)
 		fig.add_trace(go.Histogram(x=df["rss"],nbinsx=20,bingroup=1,marker_color=hex_number,opacity=0.50,legendgroup=cmssw,hovertext=cmssw,name=cmssw,showlegend=False),row=3,col=1)
 		fig.add_trace(go.Histogram(x=df["vsize"],nbinsx=20,bingroup=2,marker_color=hex_number,opacity=0.50,legendgroup=cmssw,hovertext=cmssw,name=cmssw,showlegend=False),row=3,col=2)
 		fig.add_trace(go.Histogram(x=df["time"],nbinsx=20,bingroup=3,marker_color=hex_number,opacity=0.50,legendgroup=cmssw,hovertext=cmssw,name=cmssw,showlegend=False),row=3,col=3)
