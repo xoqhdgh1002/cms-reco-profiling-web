@@ -34,4 +34,4 @@ if __name__ == "__main__":
 			structure = os.path.join(release,architecture,workflow)
 			os.makedirs(structure, exist_ok=True)
 			Log.Get_TimeMem(tmi)
-			Log.summary("{0}/{1}.txt".format(structure,step))
+			Log.summary("{}.txt".format(step))
