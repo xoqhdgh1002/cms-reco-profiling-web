@@ -29,7 +29,7 @@ class TimeMem():
 						
 				if matching3.match(i):
 					if len(i.split()) < 10:
-						self.event2.append(self.event1[:-1])
+						self.event2.append(self.event1[-1])
 					else:
 						self.event2.append(int(i.split()[9]))
 					flag = 1
