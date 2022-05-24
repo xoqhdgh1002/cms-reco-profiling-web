@@ -42,7 +42,7 @@ class TimeMem():
 				
 		print(len(self.vsize),len(self.rss),len(self.event2),len(self.time))
 	
-		return pd.merge(pd.DataFrame({"event":self.event1,"time":self.time}),pd.DataFrame({"vsize":self.vsize,"rss":self.rss,"event":self.event2}),on="event",how="outer")
+		return pd.merge(pd.DataFrame({"event":self.event1,"time":self.time}),pd.DataFrame({"vsize":self.vsize,"rss":self.rss,"event":self.event2}),on="event",how="outer").sort_values(by="event")
 
 	def summary(self,output_data):
 
