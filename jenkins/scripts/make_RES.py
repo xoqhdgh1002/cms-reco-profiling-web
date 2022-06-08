@@ -1,7 +1,7 @@
 import os
 import sys
 
-data_path = '/eos/cms/store/user/cmsbuild/profiling/data'
+DATA_DIR = '/eos/cms/store/user/cmsbuild/profiling/data'
 
 import argparse
 parser = argparse.ArgumentParser()
