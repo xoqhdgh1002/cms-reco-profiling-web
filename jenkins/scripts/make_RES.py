@@ -1,8 +1,5 @@
-import yaml
 import os
 import sys
-
-yaml_file = yaml.load(open('/eos/user/b/btae/www/Service_Work/test/cms-reco-profiling-web/test/yaml/data.yaml','r'))
 
 data_path = '/eos/cms/store/user/cmsbuild/profiling/data'
 
