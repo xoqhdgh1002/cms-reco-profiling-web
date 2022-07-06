@@ -48,7 +48,7 @@ edmEventSize -v ${fB} > ${ns}
 
 #existing : grep "_RECO\|_PAT" ${os} ${ns} | sed -e "s/${os}:/os /g;s/${ns}:/ns /g" | absMin=${absMin} dptMin=${dptMin} awk -f compareProducts.awk > temp.csv
 grep "_\|_PAT" ${os} ${ns} | sed -e "s/${os}:/os /g;s/${ns}:/ns /g" | absMin=${absMin} dptMin=${dptMin} awk -f compareProducts.awk > temp.csv
-python compareProd.py 
+python3 compareProd.py 
 
 rm ${os} ${ns}
 rm temp.csv
