@@ -20,6 +20,9 @@ for result_dir in os.listdir(results_path):
 			os.makedirs(child_dir,exist_ok=True) 
 			os.system("cp {0}{1}/{2}/{3}/cmdLog_profiling.sh {4}cmdlog/{1}/{2}/{3}/cmdLog_profiling.txt".format(data_path,i,gcc,j,results_path))
 
+os.makedirs("../../yaml",exist_ok=True)
+os.makedirs("../../list",exist_ok=True)
+
 with open('../../yaml/data.yaml','w') as f:
 	yaml.dump(workflow,f)
 
