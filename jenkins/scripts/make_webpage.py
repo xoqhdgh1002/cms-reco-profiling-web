@@ -160,7 +160,8 @@ for cmssw in cmssw_list:#Version Loop
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 			if child_version != "CMSSW_11_0":
-				print("""
+				if workflow != "136.889":
+					print("""
 			<li>Circle (Pie chart) :
 			<a href="http://cms-reco-profiling.web.cern.ch/cms-reco-profiling/{0}" title="Circle">[Circle]</a>
 			</li>""".format("circles/piechart.php?local=false&dataset="+cmssw+"%2F"+gcc+"%2F"+workflow+"%2F"+step+"_circles&resource=time_real&colours=default&groups=package&threshold=0")
