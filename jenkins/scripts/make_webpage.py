@@ -2,7 +2,7 @@ import sys
 import os
 import yaml
 
-local_path = '..'
+local_path = '../'
 result_path = '/eos/project/c/cmsweb/www/reco-prof/results/'
 result_address = 'http://cms-reco-profiling.web.cern.ch/cms-reco-profiling/results/'
 
