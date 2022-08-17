@@ -2,7 +2,7 @@ import sys
 import os
 import yaml
 
-local_path = '/eos/user/b/btae/www/Service_Work/test/cms-reco-profiling-web/test/'
+local_path = '../'
 result_path = '/eos/project/c/cmsweb/www/reco-prof/results/'
 result_address = 'http://cms-reco-profiling.web.cern.ch/cms-reco-profiling/results/'
 
@@ -160,11 +160,18 @@ for cmssw in cmssw_list:#Version Loop
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 			if child_version != "CMSSW_11_0":
-				print("""
+				if workflow != "136.889":
+					print("""
 			<li>Circle (Pie chart) :
 			<a href="http://cms-reco-profiling.web.cern.ch/cms-reco-profiling/{0}" title="Circle">[Circle]</a>
 			</li>""".format("circles/piechart.php?local=false&dataset="+cmssw+"%2F"+gcc+"%2F"+workflow+"%2F"+step+"_circles&resource=time_real&colours=default&groups=package&threshold=0")
 				)
+					if os.path.isfile("/eos/user/c/ccaputo/www/circles/data/{0}_{1}_{2}_eventSize.json".format(cmssw,"_".join(workflow.split(".")),step)):
+						print("""
+			<li>EventSizeCircle (pie chart) :
+			<a href="https://eventsizecircle.web.cern.ch/circles/eventsizephi.php?local=false&dataset={0}_{1}_{2}_eventSize&resource=size_uncom&colours=default&groups=eventsizegroup&threshold=0" title="EventSize">[EventSize]</a>
+			</li>""".format(cmssw,"_".join(workflow.split(".")),step)
+			)
 
 			print(
 "		</ul>"
