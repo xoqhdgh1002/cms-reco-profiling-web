@@ -3,12 +3,18 @@ import os
 import yaml
 
 local_path = '../'
+data_path = '/eos/cms/store/user/cmsbuild/profiling/data/'
 result_path = '/eos/project/c/cmsweb/www/reco-prof/results/'
 result_address = 'http://cms-reco-profiling.web.cern.ch/cms-reco-profiling/results/'
 
-cmssw_yaml = yaml.load(open(local_path + 'yaml/data.yaml','r'))
-cmssw_list = open(local_path + 'list/data.list','r').readlines()
-cmssw_list = [i.strip('\n') for i in cmssw_list]
+cmssw_list = os.listdir(data_path)
+cmssw_list.sort(key = lambda x: (x.split('_')[1:4],10-len(x.split('_')),len(x)))
+
+cmssw_yaml = {} 
+
+for i in cmssw_list:
+        gcc = os.listdir(data_path + i)[0]
+        cmssw_yaml[i] = {"gcc":gcc,"workflow":os.listdir(data_path + i +'/' + gcc)}
 
 mother_version = ''
 data_type = {"step3":"step3_AOD(RECO)","step4":"step4_MiniAOD(PAT)","step5":"step5_NanoAOD"}
@@ -169,7 +175,7 @@ for cmssw in cmssw_list:#Version Loop
 					if os.path.isfile("/eos/user/c/ccaputo/www/circles/data/{0}_{1}_{2}_eventSize.json".format(cmssw,"_".join(workflow.split(".")),step)):
 						print("""
 			<li>EventSizeCircle (pie chart) :
-			<a href="https://eventsizecircle.web.cern.ch/circles/eventsizephi.php?local=false&dataset={0}_{1}_{2}_eventSize&resource=size_uncom&colours=default&groups=eventsizegroup&threshold=0" title="EventSize">[EventSize]</a>
+			<a href="https://eventsizecircle.web.cern.ch/circles/eventsizephi.php?local=false&dataset={0}_{1}_{2}_eventSize&resource=size_uncom&colours=default&groups=reco_PhaseII&threshold=0" title="EventSize">[EventSize]</a>
 			</li>""".format(cmssw,"_".join(workflow.split(".")),step)
 			)
 
