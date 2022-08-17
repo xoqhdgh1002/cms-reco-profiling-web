@@ -17,7 +17,8 @@ for result_dir in os.listdir(results_path):
 		workflow[i] = {"gcc":gcc,"workflow":os.listdir(data_path + i +'/' + gcc)}
 		for j in os.listdir(data_path + i + '/' + gcc):
 			child_dir = results_path + result_dir + '/' + i + '/' + gcc + '/' + j
-			os.makedirs(child_dir, exist_ok=True)
+			os.makedirs(child_dir,exist_ok=True)
+			#os.system("cp {0}{1}/{2}/{3}/cmdLog_profiling.sh {4}cmdlog/{1}/{2}/{3}/cmdLog_profiling.txt".format(data_path,i,gcc,j,results_path))
 
 with open('/eos/user/b/btae/www/Service_Work/test/cms-reco-profiling-web/test/yaml/data.yaml','w') as f:
 	yaml.dump(workflow,f)

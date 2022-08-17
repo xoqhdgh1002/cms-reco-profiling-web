@@ -20,14 +20,14 @@ for i in range(len(cmssw_list)-1):
 	for step in ['step3','step4','step5']:
 		for workflow in yaml_file[cmssw_list[i].strip('\n')]["workflow"]:
 			if workflow in yaml_file[cmssw_list[i+1].strip('\n')]["workflow"]:
-				if not os.path.isdir("../comp_igprof/{0}/{1}/{2}".format(cmssw_list[i].strip('\n'),workflow,step)):
+				if not os.path.isdir("../../comp_igprof/{0}/{1}/{2}".format(cmssw_list[i].strip('\n'),workflow,step)):
 					continue
-				for data in [".".join(x.split(".")[:-1]) for x in os.listdir("../comp_igprof/{0}/{1}/{2}".format(cmssw_list[i].strip('\n'),workflow,step))]:
+				for data in [".".join(x.split(".")[:-1]) for x in os.listdir("../../comp_igprof/{0}/{1}/{2}".format(cmssw_list[i].strip('\n'),workflow,step))]:
 					refer_cmssw = cmssw_list[i].strip('\n')
 					target_cmssw = cmssw_list[i+1].strip('\n')
 
-					target_path = "/eos/user/b/btae/www/Service_Work/test/cms-reco-profiling-web/test/scripts/comp_igprof/{0}/{1}/{2}/{3}.csv".format(target_cmssw,workflow,step,data)
-					refer_path  = "/eos/user/b/btae/www/Service_Work/test/cms-reco-profiling-web/test/scripts/comp_igprof/{0}/{1}/{2}/{3}.csv".format(refer_cmssw,workflow,step,data)
+					target_path = "/eos/user/b/btae/www/Service_Work/test/cms-reco-profiling-web/test/comp_igprof/{0}/{1}/{2}/{3}.csv".format(target_cmssw,workflow,step,data)
+					refer_path  = "/eos/user/b/btae/www/Service_Work/test/cms-reco-profiling-web/test/comp_igprof/{0}/{1}/{2}/{3}.csv".format(refer_cmssw,workflow,step,data)
 
 					if os.path.isfile(target_path) and os.path.isfile(refer_path):
 

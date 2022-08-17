@@ -30,7 +30,7 @@ for step in ['step3','step4','step5']:
 				path = "{0}/{1}/{2}/{3}/{4}".format(data_path,cmssw,workflow,step,datatype)
 				print(path)
 				if os.path.isfile(path):
-					csv_name = "../comp_igprof/{0}/{1}/{2}/{3}.csv".format(cmssw,workflow,step,csv)
+					csv_name = "../../comp_igprof/{0}/{1}/{2}/{3}.csv".format(cmssw,workflow,step,csv)
 
 					if os.path.isfile(csv_name):
 						continue

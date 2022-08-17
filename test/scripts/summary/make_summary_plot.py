@@ -32,6 +32,8 @@ for cmssw in cmssw_list:
 
 		cmssw_dict[workflow].append(cmssw.strip('\n'))
 
+hex_number_list = ['#'+str(hex(random.randint(0,16777215)))[2:].zfill(6) for i in range(20)]
+
 for step in ['step3','step4','step5']:
 
 	for workflow in cmssw_dict.keys():
@@ -61,7 +63,7 @@ for step in ['step3','step4','step5']:
 			if not os.path.isfile(path):
 				continue
 			df = log_object.Get_TimeMem(path)
-			hex_number = '#'+str(hex(random.randint(0,16777215)))[2:].zfill(6)
+			hex_number = hex_number_list[cmssw_dict[workflow].index(cmssw)]
 
 			fig.add_trace(go.Scatter(x=df["event"],y=df["rss"],mode="lines",line=dict(color=hex_number),legendgroup=cmssw,hovertext=cmssw,name=cmssw),row=2,col=1)
 			fig.add_trace(go.Scatter(x=df["event"],y=df["vsize"],mode="lines",line=dict(color=hex_number),legendgroup=cmssw,hovertext=cmssw,name=cmssw,showlegend=False),row=2,col=2)

@@ -27,7 +27,7 @@ class TimeMem():
 					self.event.append(int(i.split()[1]))
 					self.time.append(float(i.split()[3]))
 
-		return pd.DataFrame({"vsize":self.vsize,"rss":self.rss,"event":self.event,"time":self.time})
+		return pd.DataFrame({"vsize":self.vsize,"rss":self.rss,"event":self.event,"time":self.time}).sort_values(by="event")
 
 	def summary(self,output_data):
 
