@@ -25,7 +25,12 @@ if __name__ == "__main__":
 	architecture = args.architecture
 	workflow = args.workflow
 
-	for step in ['step3','step4','step5']:
+	if workflow == "140.56" or workflow == "159.03":
+		steps = ['step2','step3','step4','step5']
+	else:
+		steps = ['step3','step4','step5']
+
+	for step in steps:
 	
 		base = os.path.join(DATA_DIR,release,architecture,workflow)
 		tmi = os.path.join(base,"{}_TimeMemoryInfo.log".format(step))
