@@ -30,7 +30,12 @@ subplot_title=["Summary Table", "(RSS)Memory Profile", "(VSIZE)Memory Profile", 
 
 version = '_'.join(release.split('_')[:3])
 
-for step in ['step3','step4','step5']:
+if workflow == "140.56" or workflow == "159.03":
+	steps = ['step2','step3','step4','step5']
+else:
+	steps = ['step3','step4','step5']
+
+for step in steps:
 
 	fig = make_subplots(rows=3, cols=3,
 		row_heights=[0.2,0.4,0.4],
