@@ -17,7 +17,7 @@ for i in cmssw_list:
         cmssw_yaml[i] = {"gcc":gcc,"workflow":os.listdir(data_path + i +'/' + gcc)}
 
 mother_version = ''
-data_type = {"step3":"step3_AOD(RECO)","step4":"step4_MiniAOD(PAT)","step5":"step5_NanoAOD"}
+data_type = {"step2":"step2_RAW(DIGI)","step3":"step3_AOD(RECO)","step4":"step4_MiniAOD(PAT)","step5":"step5_NanoAOD"}
 
 print("""<!DOCTYPE html>
 <html>
@@ -47,17 +47,21 @@ for cmssw in cmssw_list:#Version Loop
 				print(
 """<span style=" font: normal bold 1.0em Georgia, serif ; color: navy;">"""
 				)
+				if "step2" in sum_plot:
+					print(
+"""	<h3>Summary of {0}_X(RAW_DIGI)({1}) <font size="2em"><a target='_blank' href="{2}summary_plot_html/{3}" title="shortSummary">[Short Summary Time and Memory(DIGI)]</a></font></h3>""".format(mother_version,'.'.join(sum_plot.split('_')[4].split('.')[0:1]),result_address,sum_plot)
+					)
 				if "step3" in sum_plot:
 					print(
 """	<h3>Summary of {0}_X(RECO_AOD)({1}) <font size="2em"><a target='_blank' href="{2}summary_plot_html/{3}" title="shortSummary">[Short Summary Time and Memory(AOD)]</a></font></h3>""".format(mother_version,'.'.join(sum_plot.split('_')[4].split('.')[0:1]),result_address,sum_plot)
 					)
 				if "step4" in sum_plot:
 					print(
-"""	<h3>Summary of {0}_X(PAT_MiniAOD)({1}) <font size="2em"><a target='_blank' href="{2}summary_plot_html/{3}" title="shortSummary">[Short Summary Time and Memory(AOD)]</a></font></h3>""".format(mother_version,'.'.join(sum_plot.split('_')[4].split('.')[0:1]),result_address,sum_plot)
+"""	<h3>Summary of {0}_X(PAT_MiniAOD)({1}) <font size="2em"><a target='_blank' href="{2}summary_plot_html/{3}" title="shortSummary">[Short Summary Time and Memory(MINIAOD)]</a></font></h3>""".format(mother_version,'.'.join(sum_plot.split('_')[4].split('.')[0:1]),result_address,sum_plot)
 					)
 				if "step5" in sum_plot:
 					print(
-"""	<h3>Summary of {0}_X(NanoAOD)({1}) <font size="2em"><a target='_blank' href="{2}summary_plot_html/{3}" title="shortSummary">[Short Summary Time and Memory(AOD)]</a></font></h3>""".format(mother_version,'.'.join(sum_plot.split('_')[4].split('.')[0:1]),result_address,sum_plot)
+"""	<h3>Summary of {0}_X(NanoAOD)({1}) <font size="2em"><a target='_blank' href="{2}summary_plot_html/{3}" title="shortSummary">[Short Summary Time and Memory(NANOAOD)]</a></font></h3>""".format(mother_version,'.'.join(sum_plot.split('_')[4].split('.')[0:1]),result_address,sum_plot)
 					)
 		print(
 """<hr size="2" noshade>
