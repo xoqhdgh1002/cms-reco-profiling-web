@@ -32,11 +32,16 @@ for cmssw in cmssw_list:#Version Loop
 
 	if mother_version != child_version:#Select First version in Categroy
 
+
 		if mother_version != '':
 
+			print("""</details>""")
 			print("""<hr size=\"3\" noshade>""")
 
 		mother_version = child_version
+		print("""<details>
+	<summary>{0}_X</summary>""".format(mother_version))
+
 		print(
 """	<h2>{0}_X <font size="4em"></font></h2>""".format(mother_version)
 		)
@@ -198,5 +203,6 @@ for cmssw in cmssw_list:#Version Loop
 "	</ul>"
 )
 
-print("""</body>
+print("""</details>
+</body>
 </html>""")
