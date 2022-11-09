@@ -24,7 +24,7 @@ refer_cmssw = cmssw[cmssw.index(target_cmssw)-1]
 workflow = args.workflow
 
 for step in ['step3','step4','step5']:
-	if not os.path.isdir("data/{0}/{1}/{2}".format(target_cmssw,workflow,step)):
+	if not os.path.isdir("data/{0}/{1}/{2}".format(refer_cmssw,workflow,step)):
 		continue
 	for data in ['.'.join(x.split('.')[:-1]) for x in os.listdir("data/{0}/{1}/{2}".format(target_cmssw,workflow,step))]:
 		target_path = "data/{0}/{1}/{2}/{3}.csv".format(target_cmssw,workflow,step,data)
