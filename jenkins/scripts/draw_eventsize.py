@@ -8,7 +8,6 @@ from matplotlib import gridspec
 
 version = str(os.sys.argv[1])
 spec = os.sys.argv[2]
-step = os.sys.argv[3]
 
 def main(version,spec,step,job):
 	X = [] # CMSSW Version
