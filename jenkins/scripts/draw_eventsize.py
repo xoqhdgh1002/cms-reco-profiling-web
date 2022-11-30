@@ -85,7 +85,8 @@ if len(os.sys.argv) < 2:
 
 ### main code
 if __name__=="__main__":
-	main(version,spec,step,'A')
-	main(version,spec,step,'B')
 
-
+	for step in ['step3','step4','step5']:
+		if os.path.isfile("history_{0}_{1}.csv".format(spec,step)):
+			main(version,spec,step,'A')
+			main(version,spec,step,'B')
