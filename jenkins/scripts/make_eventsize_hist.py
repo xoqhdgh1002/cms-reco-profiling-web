@@ -25,7 +25,6 @@ for run in [3,4]:
 			gcc = os.listdir(data_path + cmssw)[0]
 			for workflow in os.listdir(data_path + cmssw + '/' + gcc):
 				TMI = '{0}{1}/{2}/{3}/{4}_TimeMemoryInfo.log'.format(data_path,cmssw,gcc,workflow,step)
-				print(TMI)
 				if os.path.isfile(TMI):
 					with open(TMI) as f:
 						flag = 0
