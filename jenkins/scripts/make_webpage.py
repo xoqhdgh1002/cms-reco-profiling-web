@@ -2,6 +2,8 @@ import sys
 import os
 import yaml
 
+recent_rel = sys.argv[1]
+
 local_path = '../'
 data_path = '/eos/cms/store/user/cmsbuild/profiling/data/'
 result_path = '/eos/project/c/cmsweb/www/reco-prof/results/'
@@ -31,7 +33,6 @@ for cmssw in cmssw_list:#Version Loop
 	child_version = '_'.join(cmssw.split('_')[0:3])
 
 	if mother_version != child_version:#Select First version in Categroy
-
 
 		if mother_version != '':
 
@@ -73,6 +74,61 @@ for cmssw in cmssw_list:#Version Loop
 <br>"""
 		)#End of Summary plot Loop
 
+		for sum_plot in [x for x in os.listdir(result_path + 'circles/web/hist/') if 'Eventsize' in x ]:#Summary plot Loop
+
+			if '_'.join(mother_version.split('_')[1:]) in sum_plot:#Input Summary plot for same version
+				print(
+"""<span style=" font: normal bold 1.0em Georgia, serif ; color: navy;">"""
+			)
+				if "step2" in sum_plot:
+					print(
+"""        <h3>EventSize Summary(RAW_DIGI)({1}) <font size="2em"><a target='_blank' href="{0}circles/web/hist/{2}" title="shortSummary">[EventSize Summary(RAW)]</a></font></h3>""".format(result_address,sum_plot.split('_')[3].split('.')[0],sum_plot)
+					)
+				if "step3" in sum_plot:
+					print(
+"""        <h3>EventSize Summary(RECO_AOD)({1}) <font size="2em"><a target='_blank' href="{0}circles/web/hist/{2}" title="shortSummary">[EventSize Summary(AOD)]</a></font></h3>""".format(result_address,sum_plot.split('_')[3].split('.')[0],sum_plot)
+					)
+				if "step4" in sum_plot:
+					print(
+"""        <h3>EventSize Summary(PAT_MiniAOD)({1}) <font size="2em"><a target='_blank' href="{0}circles/web/hist/{2}" title="shortSummary">[EventSize Summary(MINIAOD)]</a></font></h3>""".format(result_address,sum_plot.split('_')[3].split('.')[0],sum_plot)
+					)
+				if "step5" in sum_plot:
+					print(
+"""        <h3>EventSize Summary(NanoAOD)({1}) <font size="2em"><a target='_blank' href="{0}circles/web/hist/{2}" title="shortSummary">[EventSize Summary(NANOAOD)]</a></font></h3>""".format(result_address,sum_plot.split('_')[3].split('.')[0],sum_plot)
+					)
+		print(
+"""<hr size="2" noshade>
+<br>"""
+		)#End of Summary plot Loop
+
+
+		if mother_version == '_'.join(recent_rel.split('_')[0:3]):
+			for sum_plot in [x for x in os.listdir(result_path + 'circles/web/hist/') if 'Recent' in x ]:#Summary plot Loop
+	
+				if 'Recent' in sum_plot:#Input Summary plot for same version
+					print(
+	"""<span style=" font: normal bold 1.0em Georgia, serif ; color: navy;">"""
+				)
+					if "step2" in sum_plot:
+						print(
+	"""        <h3>Recent8 Summary(RAW_DIGI)({1}) <font size="2em"><a target='_blank' href="{0}circles/web/hist/{2}" title="shortSummary">[Recent8 Summary(RAW)]</a></font></h3>""".format(result_address,sum_plot.split('_')[1].split('.')[0],sum_plot)
+						)
+					if "step3" in sum_plot:
+						print(
+	"""        <h3>Recent8 Summary(RECO_AOD)({1}) <font size="2em"><a target='_blank' href="{0}circles/web/hist/{2}" title="shortSummary">[Recent8 Summary(AOD)]</a></font></h3>""".format(result_address,sum_plot.split('_')[1].split('.')[0],sum_plot)
+						)
+					if "step4" in sum_plot:
+						print(
+	"""        <h3>Recent8 Summary(PAT_MiniAOD)({1}) <font size="2em"><a target='_blank' href="{0}circles/web/hist/{2}" title="shortSummary">[Recent8 Summary(MINIAOD)]</a></font></h3>""".format(result_address,sum_plot.split('_')[1].split('.')[0],sum_plot)
+						)
+					if "step5" in sum_plot:
+						print(
+	"""        <h3>Recent8 Summary(NanoAOD)({1}) <font size="2em"><a target='_blank' href="{0}circles/web/hist/{2}" title="shortSummary">[Recent8 Summary(NANOAOD)]</a></font></h3>""".format(result_address,sum_plot.split('_')[1].split('.')[0],sum_plot)
+						)
+			print(
+	"""<hr size="2" noshade>
+	<br>"""
+			)#End of Summary plot Loop
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 	gcc = cmssw_yaml[cmssw]['gcc']
 	
