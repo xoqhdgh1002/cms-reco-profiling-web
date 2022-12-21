@@ -13,6 +13,8 @@ def main(version,spec,step,job):
 	X = [] # CMSSW Version
 	AUS = [] # Average Uncompressed Size
 	ACS = [] # Average Compressed Size
+	vers = version
+	vers = "_".join(vers.split("_")[1:3])
 	version = version.replace("CMSSW_","")[:-5]
 
 	with open('history_'+spec+'_'+step+'.csv','r') as hist:
@@ -68,7 +70,7 @@ def main(version,spec,step,job):
 		plt.savefig("Recent8EventSize_"+spec+"_"+step+".png")
 		plt.close()
 	if job == 'B':
-		plt.savefig("EventsizeSummary_"+spec+"_"+step+".png")
+		plt.savefig("EventsizeSummary_"+vers+"_"+spec+"_"+step+".png")
 		plt.close()
 		
 		
@@ -81,7 +83,7 @@ if len(os.sys.argv) < 2:
         exit(-9)
 
 
-
+version
 ### main code
 if __name__=="__main__":
 

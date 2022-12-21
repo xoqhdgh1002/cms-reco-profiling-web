@@ -19,7 +19,7 @@ for run in [3,4]:
 	for step in steps:
 	
 		csv = open("history_{0}.csv".format(step),'w')
-	
+
 		for cmssw in cmssw_list:
 	
 			gcc = os.listdir(data_path + cmssw)[0]
@@ -39,19 +39,20 @@ for run in [3,4]:
 							if matching1.match(i): 
 	
 								if matching2.match(i):
-	
+									
 									wf = workflow
 	
 									if os.path.isfile('{0}/{1}_{2}_{3}_eventSize.json'.format(result_path,cmssw,workflow,step)):
-	
 										with open('{0}/{1}_{2}_{3}_eventSize.json'.format(result_path,cmssw,workflow,step)) as f:
 											json_data=json.load(f)
 											events = json_data['total']['events']
 											uncom = json_data['total']['size_uncom']/int(events)
 											compr = json_data['total']['size_compr']/int(events)
-							
 											csv.write('{0},{1},{2}\n'.format(cmssw,uncom,compr))
 											break
-		
-		f.close()
+
+		csv.close()
 		shutil.move('history_{0}.csv'.format(step),'history_{0}_{1}.csv'.format(wf,step))
+
+		if len(open('history_{0}_{1}.csv'.format(wf,step)).readlines()) == 0:
+			os.remove('history_{0}_{1}.csv'.format(wf,step))
