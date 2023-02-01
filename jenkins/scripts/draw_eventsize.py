@@ -15,7 +15,7 @@ def main(version,spec,step,job):
 	ACS = [] # Average Compressed Size
 	vers = version
 	vers = "_".join(vers.split("_")[1:3])
-	version = version.replace("CMSSW_","")[:-5]
+	version = "_".join(version.split("_")[1:4])
 
 	with open('history_'+spec+'_'+step+'.csv','r') as hist:
 		rd = csv.reader(hist)
