@@ -114,24 +114,7 @@ def main(filename):
 		
 		## dump and save
 		json.dump(output, fileModules, ensure_ascii=False, indent=4 )
-		## save history
-		historySaver(version,spec,step,total_uncom,total_compr,nEvents)
-		return 0
 
-def historySaver(version,spec,step,total_uncom,total_compr,nEvents):
-	with open('history_'+spec+'_'+step+'.csv','r') as hist:
-		rd = csv.reader(hist)
-		for l in rd:
-			if version in l[0]:
-				print("job duplicated. history did not saved")
-				return 0
-			else:
-				continue
-	with open('history_'+spec+'_'+step+'.csv','a',newline='') as hist:
-		print("first "+version+" "+spec+" run! history will be saved")
-		wr = csv.writer(hist)
-		wr.writerow([version,total_uncom/int(nEvents),total_compr/int(nEvents)])
-		return 0
 ### I/O check
 if len(os.sys.argv) < 2:
 	print("Missing Input file!!")
