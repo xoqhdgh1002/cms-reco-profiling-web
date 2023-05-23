@@ -1,5 +1,6 @@
 import os
 import json
+import csv
 #import string
 
 def findVersion(firstline):
