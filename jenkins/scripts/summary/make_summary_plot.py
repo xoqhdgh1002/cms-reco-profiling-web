@@ -61,6 +61,8 @@ for step in steps:
 		if not os.path.isfile(path):
 			continue
 		df = log_object.Get_TimeMem(path)
+		if len(df['event']) == 0:
+			continue
 		hex_number = '#'+str(hex(random.randint(0,16777215)))[2:].zfill(6)
 		x_axis = np.arange(len(df))
 
