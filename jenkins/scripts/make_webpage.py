@@ -238,16 +238,9 @@ for cmssw in cmssw_list:#Version Loop
 			</li>""".format("circles/piechart.php?local=false&dataset="+cmssw+"%2F"+gcc+"%2F"+workflow+"%2F"+step+"_circles&resource=time_real&colours=default&groups=package&threshold=0")
 				)
 					if os.path.isfile("{0}/circles/web/data/{1}_{2}_{3}_eventSize.json".format(result_path,cmssw,workflow,step)):
-						if step == "step3":
-							print("""
+						print("""
 			<li>EventSizeCircle (pie chart) :
-			<a href="https://cms-reco-profiling.web.cern.ch/cms-reco-profiling/results/circles/web/eventsize.php?local=false&dataset={0}_{1}_{2}_eventSize&resource=size_uncom&colours=default&groups=reco_PhaseII&threshold=0" title="EventSize">[EventSize]</a>
-			</li>""".format(cmssw,workflow,step)
-			)
-						else:
-							print("""
-			<li>EventSizeCircle (pie chart) :
-			<a href="https://cms-reco-profiling.web.cern.ch/cms-reco-profiling/results/circles/web/eventsize_stepx.php?local=false&dataset={0}_{1}_{2}_eventSize&resource=size_uncom&colours=default&groups=reco_PhaseII&threshold=0" title="EventSize">[EventSize]</a>
+			<a href="https://cms-reco-profiling.web.cern.ch/cms-reco-profiling/results/circles/web/eventsize_stepx.php?local=false&dataset={0}_{1}_{2}_eventSize&resource=size_uncom&colours=default&groups=reco_PhaseII_private&threshold=0" title="EventSize">[EventSize]</a>
 			</li>""".format(cmssw,workflow,step)
 			)
 
