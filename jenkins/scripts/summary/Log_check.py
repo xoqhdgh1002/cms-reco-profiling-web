@@ -9,24 +9,20 @@ class TimeMem():
 
 		matching1 = re.compile('^TimeEvent')
 		matching2 = re.compile('^MemoryCheck')
-		matching3 = re.compile('^%MSG-w MemoryCheck')
+		matching3 = re.compile('%MSG-w MemoryCheck:  PostProcessPath')
 
+		self.event1 = []
+		self.time = []
+		self.event2 = []
 		self.vsize = []
 		self.rss = []
-		self.event1 = []
-		self.event2 = []
-		self.time = []
 
 		with open(input_data,'r') as file:
-
 			flag = 0
-
 			for i in file:
-
 				if matching1.match(i):
 					self.event1.append(int(i.split()[1]))
 					self.time.append(float(i.split()[3]))
-						
 				if matching3.match(i):
 					if len(i.split()) < 10:
 						self.event2.append(self.event1[-1])
@@ -34,7 +30,6 @@ class TimeMem():
 						self.event2.append(int(i.split()[9]))
 					flag = 1
 					continue;
-
 				if flag == 1:
 					self.vsize.append(float(i.split()[4]))
 					self.rss.append(float(i.split()[7]))
@@ -42,7 +37,10 @@ class TimeMem():
 				
 		print(len(self.vsize),len(self.rss),len(self.event2),len(self.time))
 	
-		return pd.merge(pd.DataFrame({"event":self.event1,"time":self.time}),pd.DataFrame({"vsize":self.vsize,"rss":self.rss,"event":self.event2}),on="event",how="outer").sort_values(by="event")
+		df1 = pd.DataFrame({"event":self.event1,"time":self.time})
+		df2 = pd.DataFrame({"event":self.event2,"vsize":self.vsize,"rss":self.rss})
+
+		return pd.merge(df1,df2,on="event",how="outer").sort_values(by="event")
 
 	def summary(self,output_data):
 
