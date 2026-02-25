@@ -162,7 +162,6 @@ for cmssw in cmssw_list:#Version Loop
 				<a href="{0}Time_Mem_Summary/{1}{2}.txt" title="getTimeMemSummary">[getTimeMemSummary]</a>""".format(result_address,from_data_path,step)
 			)
 			print("""
-				<li>
 				<a href="{0}Time_Mem_Summary/{1}memory_report_{2}.txt" title="memory_report">[memory_report]</a>""".format(result_address,from_data_path,step)
 			)
 
