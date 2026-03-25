@@ -150,7 +150,7 @@ for cmssw in cmssw_list:#Version Loop
 			<li>
 			<a href="{0}cmdlog/{1}/{2}/{3}/cmdLog_profiling.txt" title="cmdLog">[cmdLog]</a>""".format(result_address,cmssw,gcc,workflow))
 
-		for step in [i.split('.')[0] for i in TMS_file]:
+		for step in [i.split('.')[0] for i in TMS_file if i.split('.')[0] in data_type]:
 
 			from_data_path = "{0}/{1}/{2}/".format(cmssw,gcc,workflow)
 			from_cgi_path = "{0}/{1}/{2}/".format(cmssw,workflow,step)
