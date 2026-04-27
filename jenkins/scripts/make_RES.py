@@ -1,32 +1,60 @@
+"""Run igprof-analyse on each step's CPU/MEM .gz and write .res files.
+
+Outputs go directly under RESULT_PATH/RES/<release>/<arch>/<workflow>/ via the
+shared NFS/EOS mount (the inline shell does NOT xrdcopy these — see config.xml
+section "make_RES.py" — so they must land there in-place).
+
+Output naming preserved verbatim:
+    step{N}_cpu.res
+    step{N}_mem_<igprof-suffix>.res    (suffix = "1" / "200" / "399" / "")
+"""
+
+from __future__ import annotations
+
 import os
 import sys
 
-DATA_DIR = '/eos/cms/store/user/cmsbuild/profiling/data'
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _common
 
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument("--profile-data", type=str, default=DATA_DIR, help="profiling data location")
-parser.add_argument("--release", type=str, help="CMSSW release", default=None)
-parser.add_argument("--architecture", type=str, help="architecture for release", default=None)
-parser.add_argument("--workflow", type=str, help="workflow", default=None)
-args = parser.parse_args()
+MAKE_RES_SH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "make_res.sh")
 
-release = args.release
-architecture = args.architecture
-workflow = args.workflow
 
-for step in ['step3','step4','step5']:
-	data_dir = "{0}/{1}/{2}".format(release,architecture,workflow)
-	gz_list = [x for x in os.listdir("{0}/{1}/{2}/{3}".format(DATA_DIR,release,architecture,workflow)) if "gz" in x and step in x]
-	if len(gz_list)==0:
-		continue
-	print(release,architecture,workflow,step)
-	for gz in gz_list:
-		if "CPU" in gz:
-			if os.path.isfile("/eos/project/c/cmsweb/www/reco-prof/results/RES/{0}/{1}_cpu.res".format(data_dir,step)):
-				continue
-			os.system("source ./make_res.sh 0 {0}/{1}/{2} /eos/project/c/cmsweb/www/reco-prof/results/RES/{1}/{3}_cpu.res".format(DATA_DIR,data_dir,gz,step))
-		elif "MEM" in gz:
-			if os.path.isfile("/eos/project/c/cmsweb/www/reco-prof/results/RES/{0}/{1}_mem_{2}.res".format(data_dir,step,gz.split(".")[1])):
-				continue
-			os.system("source ./make_res.sh 1 {0}/{1}/{2} /eos/project/c/cmsweb/www/reco-prof/results/RES/{1}/{3}_mem_{4}.res".format(DATA_DIR,data_dir,gz,step,gz.split(".")[1]))
+def igprof_suffix(gz_name: str) -> str:
+    """Extract the checkpoint suffix from a name like 'step3_igprofMEM.200.gz'."""
+    # gz_name = "step{N}_igprofMEM.<suffix>.gz" or "step{N}_igprofMEM.gz"
+    parts = gz_name.split(".")
+    return parts[1] if len(parts) >= 3 else ""
+
+
+def main() -> None:
+    args = _common.make_parser("igprof-analyse runner").parse_args()
+    release, arch, wf = args.release, args.architecture, args.workflow
+
+    src_root = _common.data_dir(release, arch, wf, base=args.profile_data)
+    out_root = _common.result_subdir("RES", release, arch, wf)
+    os.makedirs(out_root, exist_ok=True)
+
+    for step in ("step3", "step4", "step5"):
+        gz_files = [f for f in os.listdir(src_root) if f.endswith(".gz") and step in f]
+        if not gz_files:
+            continue
+        print(release, arch, wf, step)
+
+        for gz in gz_files:
+            src = os.path.join(src_root, gz)
+            if "CPU" in gz:
+                out = os.path.join(out_root, f"{step}_cpu.res")
+                if os.path.isfile(out):
+                    continue
+                os.system(f"source {MAKE_RES_SH} 0 {src} {out}")
+            elif "MEM" in gz:
+                suffix = igprof_suffix(gz)
+                out = os.path.join(out_root, f"{step}_mem_{suffix}.res")
+                if os.path.isfile(out):
+                    continue
+                os.system(f"source {MAKE_RES_SH} 1 {src} {out}")
+
+
+if __name__ == "__main__":
+    main()

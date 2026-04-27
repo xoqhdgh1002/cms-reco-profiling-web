@@ -1,93 +1,114 @@
+"""Plot per-event uncompressed/compressed size history.
+
+Two flavours per step:
+    Recent8EventSize_<workflow>_<step>.png  -- last 8 releases
+    EventsizeSummary_<vers>_<workflow>_<step>.png  -- only releases in <vers>
+
+Inline shell xrdcopies `*.png` from cwd to circles/web/hist/.
+
+Usage:
+    python3 draw_eventsize.py <RELEASE> <WORKFLOW>
+"""
+
+from __future__ import annotations
+
+import csv
 import os
 import sys
-import csv
+
 import matplotlib.pyplot as plt
-from matplotlib import rc
-from matplotlib import gridspec
-#import mplhep as hep
-
-version = str(os.sys.argv[1])
-spec = os.sys.argv[2]
-
-def main(version,spec,step,job):
-	X = [] # CMSSW Version
-	AUS = [] # Average Uncompressed Size
-	ACS = [] # Average Compressed Size
-	vers = version
-	vers = "_".join(vers.split("_")[1:3])
-	version = "_".join(version.split("_")[1:4])
-
-	with open('history_'+spec+'_'+step+'.csv','r') as hist:
-		rd = csv.reader(hist)
-		idx = 0
-		for l in rd:
-			X.append(l[0].replace("CMSSW_",""))
-			AUS.append(round(float(l[1]),1))
-			ACS.append(round(float(l[2]),1))
-	if job == 'A':
-		X = X[-8:]
-		AUS = AUS[-8:]
-		ACS = ACS[-8:]
-	elif job == 'B':
-		m = [i for i in range(len(X)) if str(version) in X[i]]
-		X = X[min(m):max(m)+1]
-		AUS = AUS[min(m):max(m)+1]
-		ACS = ACS[min(m):max(m)+1]
-		print(X)
-
-	plt.rcParams["figure.figsize"] = (20,10)
-	plt.rc('font', size=20)     
-	plt.rc('axes', labelsize=20) 
-	plt.rc('xtick', labelsize=20)
-	plt.rc('ytick', labelsize=20) 
-	plt.rc('legend', fontsize=20) 
-	fig, ax1 = plt.subplots()
-	line1 = ax1.plot(X,AUS, '--bo',label ="Average Uncompressed Size ("+spec+")", color ='blue',linewidth=3,markersize=8)
-	for i, v in enumerate(X):
-		ax1.text(v, AUS[i], AUS[i],
-		     fontsize = 20,
-		     color='black',
-		     horizontalalignment='right',  # horizontalalignment (left, center, right)
-		     verticalalignment='bottom')    # verticalalignment (top, center, bottom)
-
-	ax2 = ax1.twinx()
-	line2 = ax2.plot(X,ACS, '--bo',label ="Average Compressed Size ("+spec+")", color ='green',linewidth=3,markersize=8)
-	for i, v in enumerate(X):
-		ax2.text(v, ACS[i], ACS[i],
-		     fontsize = 20,
-		     color='black',
-		     horizontalalignment='left',  # horizontalalignment (left, center, right)
-		     verticalalignment='top')    # verticalalignment (top, center, bottom)
-
-	ax1.set_xlabel("CMSSW Version", fontsize=25)
-	ax1.set_ylabel("Size/Event [kB]", fontsize=25)
-	ax2.set_ylabel("Size/Event [kB]", fontsize=25)
-	lines = line1 + line2
-	labels = [l.get_label() for l in lines]
-	ax1.legend(lines, labels)
-
-	if job == 'A':
-		plt.savefig("Recent8EventSize_"+spec+"_"+step+".png")
-		plt.close()
-	if job == 'B':
-		plt.savefig("EventsizeSummary_"+vers+"_"+spec+"_"+step+".png")
-		plt.close()
-		
-		
 
 
+def read_history(csv_path: str) -> tuple[list[str], list[float], list[float]]:
+    versions, uncom, compr = [], [], []
+    with open(csv_path) as f:
+        for row in csv.reader(f):
+            versions.append(row[0].replace("CMSSW_", ""))
+            uncom.append(round(float(row[1]), 1))
+            compr.append(round(float(row[2]), 1))
+    return versions, uncom, compr
 
-### I/O check
-if len(os.sys.argv) < 2:
-        print("Missing Input file!!")
-        exit(-9)
+
+def slice_for_job(job: str, version_window: str,
+                  versions: list[str], uncom: list[float], compr: list[float]
+                  ) -> tuple[list[str], list[float], list[float]]:
+    if job == "A":
+        return versions[-8:], uncom[-8:], compr[-8:]
+    if job == "B":
+        idxs = [i for i, v in enumerate(versions) if version_window in v]
+        if not idxs:
+            return [], [], []
+        lo, hi = min(idxs), max(idxs) + 1
+        return versions[lo:hi], uncom[lo:hi], compr[lo:hi]
+    raise ValueError(job)
 
 
-version
-### main code
-if __name__=="__main__":
+def render(version_short: str, workflow: str, step: str, job: str,
+           versions: list[str], uncom: list[float], compr: list[float]) -> None:
+    plt.rcParams["figure.figsize"] = (20, 10)
+    plt.rc("font", size=20)
+    plt.rc("axes", labelsize=20)
+    plt.rc("xtick", labelsize=20)
+    plt.rc("ytick", labelsize=20)
+    plt.rc("legend", fontsize=20)
 
-	for step in ['step3','step4','step5']:
-		if os.path.isfile("history_{0}_{1}.csv".format(spec,step)):
-			main(version,spec,step,'A')
-			main(version,spec,step,'B')
+    fig, ax1 = plt.subplots()
+    line1 = ax1.plot(versions, uncom, "--bo",
+                     label=f"Average Uncompressed Size ({workflow})",
+                     color="blue", linewidth=3, markersize=8)
+    for x, y in zip(versions, uncom):
+        ax1.text(x, y, y, fontsize=20, color="black",
+                 horizontalalignment="right", verticalalignment="bottom")
+
+    ax2 = ax1.twinx()
+    line2 = ax2.plot(versions, compr, "--bo",
+                     label=f"Average Compressed Size ({workflow})",
+                     color="green", linewidth=3, markersize=8)
+    for x, y in zip(versions, compr):
+        ax2.text(x, y, y, fontsize=20, color="black",
+                 horizontalalignment="left", verticalalignment="top")
+
+    ax1.set_xlabel("CMSSW Version", fontsize=25)
+    ax1.set_ylabel("Size/Event [kB]", fontsize=25)
+    ax2.set_ylabel("Size/Event [kB]", fontsize=25)
+    lines = line1 + line2
+    ax1.legend(lines, [l.get_label() for l in lines])
+
+    if job == "A":
+        plt.savefig(f"Recent8EventSize_{workflow}_{step}.png")
+    else:  # job == "B"
+        plt.savefig(f"EventsizeSummary_{version_short}_{workflow}_{step}.png")
+    plt.close()
+
+
+def main() -> None:
+    if len(sys.argv) < 3:
+        print("Usage: draw_eventsize.py <RELEASE> <WORKFLOW>")
+        sys.exit(-9)
+
+    release = sys.argv[1]
+    workflow = sys.argv[2]
+
+    # version_short: "16_0" (used in output filename "EventsizeSummary_16_0_...")
+    version_short = "_".join(release.split("_")[1:3])
+    # version_window: "16_0_4" — used to filter releases inside the same patch series
+    version_window = "_".join(release.split("_")[1:4])
+
+    for step in ("step3", "step4", "step5"):
+        csv_path = f"history_{workflow}_{step}.csv"
+        if not os.path.isfile(csv_path):
+            continue
+
+        versions, uncom, compr = read_history(csv_path)
+        if not versions:
+            continue
+
+        for job in ("A", "B"):
+            v, u, c = slice_for_job(job, version_window, versions, uncom, compr)
+            if not v:
+                continue
+            render(version_short, workflow, step, job, v, u, c)
+
+
+if __name__ == "__main__":
+    main()

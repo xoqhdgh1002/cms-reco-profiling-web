@@ -1,53 +1,94 @@
+"""Parser for CMSSW step{N}_TimeMemoryInfo.log files.
+
+Extracts per-event TimeEvent (CPU time) and PostProcessPath MemoryCheck
+(VSIZE, RSS) records and joins them on event number. Produces the summary
+text block written to step{N}.txt by `make_get_time_memory_summary.py`.
+
+Public API preserved (TimeMem.Get_TimeMem, TimeMem.summary) since several
+scripts import this module by name.
+"""
+
+from __future__ import annotations
+
 import re
-import sys
-import numpy as np
+
 import pandas as pd
 
-class TimeMem():
 
-	def Get_TimeMem(self,input_data):
+_TIME_EVENT = re.compile(r"^TimeEvent")
+_MEMORY_HEADER = re.compile(r"%MSG-w MemoryCheck:  PostProcessPath")
 
-		matching1 = re.compile('^TimeEvent')
-		matching2 = re.compile('^MemoryCheck')
-		matching3 = re.compile('%MSG-w MemoryCheck:  PostProcessPath')
 
-		self.event1 = []
-		self.time = []
-		self.event2 = []
-		self.vsize = []
-		self.rss = []
+class TimeMem:
+    """Stateful parser. Call Get_TimeMem(path) then summary(out_path)."""
 
-		with open(input_data,'r') as file:
-			flag = 0
-			for i in file:
-				if matching1.match(i):
-					self.event1.append(int(i.split()[1]))
-					self.time.append(float(i.split()[3]))
-				if matching3.match(i):
-					if len(i.split()) < 10:
-						self.event2.append(self.event1[-1])
-					else:
-						self.event2.append(int(i.split()[9]))
-					flag = 1
-					continue;
-				if flag == 1:
-					self.vsize.append(float(i.split()[4]))
-					self.rss.append(float(i.split()[7]))
-					flag = 0
-				
-		print(len(self.vsize),len(self.rss),len(self.event2),len(self.time))
-	
-		df1 = pd.DataFrame({"event":self.event1,"time":self.time})
-		df2 = pd.DataFrame({"event":self.event2,"vsize":self.vsize,"rss":self.rss})
+    def Get_TimeMem(self, input_data: str) -> pd.DataFrame:
+        self.event1: list[int] = []   # event number from TimeEvent
+        self.time:   list[float] = []  # wall-clock per event
+        self.event2: list[int] = []   # event number from MemoryCheck
+        self.vsize:  list[float] = []
+        self.rss:    list[float] = []
 
-		return pd.merge(df1,df2,on="event",how="outer").sort_values(by="event")
+        # State machine: when we see the MemoryCheck header line, the next
+        # non-header line carries vsize/rss numbers.
+        await_mem_values = False
 
-	def summary(self,output_data):
+        with open(input_data, "r") as fh:
+            for line in fh:
+                if _TIME_EVENT.match(line):
+                    parts = line.split()
+                    self.event1.append(int(parts[1]))
+                    self.time.append(float(parts[3]))
+                    continue
 
-		f = open(output_data,"w")
-		f.write("Summary for {} events\n".format(len(self.time)))
-		f.write("Max VSIZ {0} on evt {1} ; max RSS {2} on evt {3}\n".format(max(self.vsize),self.event2[self.vsize.index(max(self.vsize))],max(self.rss),self.event2[self.rss.index(max(self.rss))]))
-		f.write("Time av {0:0.5f} s/evt   max {1} s on evt {2}\n".format(sum(self.time)/len(self.time),max(self.time),self.event1[self.time.index(max(self.time))]))
-		f.write("M1 Time av {0:0.5f} s/evt   max {1} s on evt {2}\n".format(sum(self.time[1:])/len(self.time[1:]),max(self.time[1:]),self.event1[self.time.index(max(self.time[1:]))]))
-		f.write("M8 Time av {0:0.5f} s/evt   max {1} s on evt {2}".format(sum(self.time[8:])/len(self.time[8:]),max(self.time[8:]),self.event1[self.time.index(max(self.time[8:]))]))
-		f.close()
+                if _MEMORY_HEADER.match(line):
+                    parts = line.split()
+                    if len(parts) < 10:
+                        # Header without an explicit event number — reuse the
+                        # most recent TimeEvent's id.
+                        self.event2.append(self.event1[-1])
+                    else:
+                        self.event2.append(int(parts[9]))
+                    await_mem_values = True
+                    continue
+
+                if await_mem_values:
+                    parts = line.split()
+                    self.vsize.append(float(parts[4]))
+                    self.rss.append(float(parts[7]))
+                    await_mem_values = False
+
+        print(len(self.vsize), len(self.rss), len(self.event2), len(self.time))
+
+        df_time = pd.DataFrame({"event": self.event1, "time": self.time})
+        df_mem = pd.DataFrame({"event": self.event2, "vsize": self.vsize, "rss": self.rss})
+        return pd.merge(df_time, df_mem, on="event", how="outer").sort_values(by="event")
+
+    def summary(self, output_data: str) -> None:
+        """Write the canonical step{N}.txt summary block.
+
+        Format must stay byte-for-byte compatible — make_webpage.py renders
+        it as plain text and downstream tooling greps it.
+        """
+        n = len(self.time)
+        max_v = max(self.vsize)
+        max_r = max(self.rss)
+        evt_max_v = self.event2[self.vsize.index(max_v)]
+        evt_max_r = self.event2[self.rss.index(max_r)]
+        max_t = max(self.time)
+        evt_max_t = self.event1[self.time.index(max_t)]
+
+        # M1 = drop first event (warm-up). M8 = drop first 8 (more aggressive warm-up).
+        max_t1 = max(self.time[1:])
+        max_t8 = max(self.time[8:])
+        evt_max_t1 = self.event1[self.time.index(max_t1)]
+        evt_max_t8 = self.event1[self.time.index(max_t8)]
+
+        with open(output_data, "w") as f:
+            f.write(f"Summary for {n} events\n")
+            f.write(f"Max VSIZ {max_v} on evt {evt_max_v} ; max RSS {max_r} on evt {evt_max_r}\n")
+            f.write(f"Time av {sum(self.time) / n:0.5f} s/evt   max {max_t} s on evt {evt_max_t}\n")
+            f.write(f"M1 Time av {sum(self.time[1:]) / (n - 1):0.5f} s/evt   "
+                    f"max {max_t1} s on evt {evt_max_t1}\n")
+            f.write(f"M8 Time av {sum(self.time[8:]) / (n - 8):0.5f} s/evt   "
+                    f"max {max_t8} s on evt {evt_max_t8}")

@@ -1,42 +1,33 @@
+"""For one (release, arch, workflow), parse step{N}_TimeMemoryInfo.log and
+write step{N}.txt summary in the working directory.
+
+The inline shell xrdcopies `step*.txt` from cwd to EOS.
+"""
+
+from __future__ import annotations
+
 import os
-import yaml
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import _common
 import Log_check
 
-DATA_DIR = '/eos/cms/store/user/cmsbuild/profiling/data/' 
 
-def parse_args():
+def main() -> None:
+    args = _common.make_parser("Time/Memory summary writer").parse_args()
+    release, arch, wf = args.release, args.architecture, args.workflow
 
-	import argparse
-	parser = argparse.ArgumentParser()
-	parser.add_argument("--profile-data", type=str, default=DATA_DIR, help="profiling data location")
-	parser.add_argument("--release", type=str, help="CMSSW release", default=None)
-	parser.add_argument("--architecture", type=str, help="architecture for release", default=None)
-	parser.add_argument("--workflow", type=str, help="workflow", default=None)
-	args = parser.parse_args()
-	return args
+    log_parser = Log_check.TimeMem()
+
+    for step in _common.steps_for(wf):
+        tmi = _common.step_file(release, arch, wf, step, "_TimeMemoryInfo.log",
+                                base=args.profile_data)
+        if not os.path.isfile(tmi):
+            continue
+        log_parser.Get_TimeMem(tmi)
+        log_parser.summary(f"{step}.txt")
+
 
 if __name__ == "__main__":
-
-	Log = Log_check.TimeMem()
-
-	args = parse_args()
-
-	release = args.release
-	architecture = args.architecture
-	workflow = args.workflow
-
-	if workflow == "140.56" or workflow == "159.03":
-		steps = ['step2','step3','step4','step5']
-	else:
-		steps = ['step3','step4','step5']
-
-	for step in steps:
-	
-		base = os.path.join(DATA_DIR,release,architecture,workflow)
-		tmi = os.path.join(base,"{}_TimeMemoryInfo.log".format(step))
-	
-		if os.path.isfile(tmi):
-			structure = os.path.join(release,architecture,workflow)
-			os.makedirs(structure, exist_ok=True)
-			Log.Get_TimeMem(tmi)
-			Log.summary("{}.txt".format(step))
+    main()

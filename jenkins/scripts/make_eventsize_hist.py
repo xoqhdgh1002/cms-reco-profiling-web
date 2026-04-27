@@ -1,45 +1,60 @@
-import sys
-import os
-import yaml
+"""Build per-step history CSV across releases for one workflow.
+
+Reads JSONs already published under RESULT_PATH/circles/web/data/ (made by
+make_eventsize-json.py earlier) and emits history_<workflow>_<step>.csv with
+one row per release: <release>,<avg_uncom_kB>,<avg_comp_kB>.
+
+draw_eventsize.py consumes this CSV next.
+"""
+
+from __future__ import annotations
+
 import json
-import shutil
+import os
+import sys
 
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument("--workflow", type=str, help="workflow", default=None)
-args = parser.parse_args()
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _common
 
-workflow = args.workflow
 
-data_path = '/eos/cms/store/user/cmsbuild/profiling/data/'
-result_path = '/eos/project/c/cmsweb/www/reco-prof/results/circles/web/data/'
+def release_sort_key(release: str) -> tuple:
+    """Mirror the original sort: by major.minor.patch tokens then by name length."""
+    return (release.split("_")[1:4], 10 - len(release.split("_")), len(release))
 
-cmssw_list = os.listdir(data_path)
-cmssw_list.sort(key = lambda x: (x.split('_')[1:4],10-len(x.split('_')),len(x)))
 
-steps = ['step3','step4','step5']
-#------------------------------------------------------------------
-for step in steps:
+def main() -> None:
+    args = _common.make_parser("Event-size release history CSV", need=("workflow",)).parse_args()
+    workflow = args.workflow
+    if not workflow:
+        sys.exit("--workflow is required")
 
-	csv = open("history_{0}.csv".format(step),'w')
+    data_root = args.profile_data
+    json_root = _common.result_subdir("circles", "web", "data")
 
-	for cmssw in cmssw_list:
+    releases = sorted(os.listdir(data_root), key=release_sort_key)
 
-		gcc = os.listdir(data_path + cmssw)[0]
-		TMI = '{0}{1}/{2}/{3}/{4}_TimeMemoryInfo.log'.format(data_path,cmssw,gcc,workflow,step)
-		wf = workflow
+    for step in ("step3", "step4", "step5"):
+        out = f"history_{workflow}_{step}.csv"
+        rows: list[str] = []
 
-		if os.path.isfile('{0}/{1}_{2}_{3}_eventSize.json'.format(result_path,cmssw,workflow,step)):
-			with open('{0}/{1}_{2}_{3}_eventSize.json'.format(result_path,cmssw,workflow,step)) as f:
-				json_data=json.load(f)
-				events = json_data['total']['events']
-				uncom = json_data['total']['size_uncom']/int(events)
-				compr = json_data['total']['size_compr']/int(events)
-				csv.write('{0},{1},{2}\n'.format(cmssw,uncom,compr))
+        for release in releases:
+            json_path = os.path.join(json_root, f"{release}_{workflow}_{step}_eventSize.json")
+            if not os.path.isfile(json_path):
+                continue
+            with open(json_path) as f:
+                data = json.load(f)
+            events = int(data["total"]["events"])
+            if events == 0:
+                continue
+            uncom = data["total"]["size_uncom"] / events
+            compr = data["total"]["size_compr"] / events
+            rows.append(f"{release},{uncom},{compr}\n")
 
-	csv.close()
-	shutil.move('history_{0}.csv'.format(step),'history_{0}_{1}.csv'.format(workflow,step))
+        if not rows:
+            continue
+        with open(out, "w") as f:
+            f.writelines(rows)
 
-	if len(open('history_{0}_{1}.csv'.format(workflow,step)).readlines()) == 0:
-		os.remove('history_{0}_{1}.csv'.format(workflow,step))
 
+if __name__ == "__main__":
+    main()
