@@ -76,23 +76,31 @@ def _read_max_memory_bytes(path: str) -> int | None:
         return None
 
 
-# Per-step colour palette for the bar chart. step3 (RECO) is the headline pass.
-_STEP_COLOURS = {
-    "step2": "#94a3b8", "step3": "#2563eb", "step4": "#16a34a", "step5": "#f97316",
+# Per-step style for the trend lines. Different markers so the three traces
+# remain distinguishable in B/W or for readers who don't see hue. Javier
+# (2025-12-XX) asked for line+marker traces grouped per workflow so a
+# gradual rise vs. sudden jump in peak memory is visible at a glance.
+_STEP_STYLE = {
+    "step2": {"colour": "#94a3b8", "symbol": "diamond",       "label": "step2"},
+    "step3": {"colour": "#2563eb", "symbol": "circle",        "label": "step3 (RECO/AOD)"},
+    "step4": {"colour": "#16a34a", "symbol": "square",        "label": "step4 (PAT/MiniAOD)"},
+    "step5": {"colour": "#f97316", "symbol": "triangle-up",   "label": "step5 (NanoAOD)"},
 }
 
 
 def write_family_maxmem_plot(version_prefix: str, profile_data: str) -> None:
-    """Family-level grouped-bar Plotly chart of MaxMemoryPreload values.
+    """Family-level line+marker Plotly chart of MaxMemoryPreload values.
 
     For every release in the family × workflow it has × step it analyses,
     pull the trailing 'max memory used:' from
     RESULT_PATH/Time_Mem_Summary/<rel>/<arch>/<wf>/memory_report_step{N}.txt
     (already populated by found_report.py + the inline-shell xrdcopy).
 
-    Renders one stacked subplot per workflow, x=release ordered by version,
-    y=peak memory in GB, colour=step. Output: <version_prefix>_maxmem.html
-    in cwd; the inline-shell xrdcopy of `*.html` puts it in summary_plot_html/.
+    Renders one subplot per workflow, x=release ordered by version,
+    y=peak memory in GB. Each step is a separate trace with its own marker
+    symbol so a sudden jump or gradual rise across releases is obvious.
+    Output: <version_prefix>_maxmem.html in cwd; the inline-shell xrdcopy
+    of `*.html` puts it in summary_plot_html/.
     """
     rows = []
     for cmssw in family_releases(version_prefix, profile_data):
@@ -132,42 +140,69 @@ def write_family_maxmem_plot(version_prefix: str, profile_data: str) -> None:
         vertical_spacing=0.10,
     )
 
+    # Track which steps have been added to the legend so the same step in
+    # different subplots reuses one legend entry.
+    legend_seen: set[str] = set()
+
     for i, wf in enumerate(workflows, 1):
         wf_rows = [r for r in rows if r["workflow"] == wf]
-        steps_present = sorted({r["step"] for r in wf_rows})
-        # Releases that contributed at least one bar in this workflow,
-        # ordered by version key.
-        rels = sorted({r["release"] for r in wf_rows},
-                      key=_release_sort_key)
-        for step in steps_present:
+        # All releases that appeared in any step of this workflow,
+        # ordered by version. None gaps mean "this step wasn't analysed
+        # for that release"; connectgaps keeps the line continuous.
+        rels = sorted({r["release"] for r in wf_rows}, key=_release_sort_key)
+        for step in ("step2", "step3", "step4", "step5"):
             ys = []
+            present = False
             for rel in rels:
                 hit = next((r for r in wf_rows
                             if r["release"] == rel and r["step"] == step), None)
-                ys.append(hit["max_used_gb"] if hit else None)
-            fig.add_trace(go.Bar(
-                x=rels,
-                y=ys,
-                name=step,
-                marker_color=_STEP_COLOURS.get(step, "#666"),
+                if hit:
+                    present = True
+                    ys.append(hit["max_used_gb"])
+                else:
+                    ys.append(None)
+            if not present:
+                continue
+            style = _STEP_STYLE[step]
+            show_legend = step not in legend_seen
+            legend_seen.add(step)
+            fig.add_trace(go.Scatter(
+                x=rels, y=ys,
+                mode="lines+markers",
+                name=style["label"],
                 legendgroup=step,
-                showlegend=(i == 1),
-                hovertemplate="%{x}<br>" + step + ": %{y:.2f} GB<extra></extra>",
+                showlegend=show_legend,
+                line=dict(color=style["colour"], width=2),
+                marker=dict(symbol=style["symbol"], size=10,
+                            color=style["colour"],
+                            line=dict(color="white", width=1)),
+                connectgaps=True,
+                hovertemplate=("<b>%{x}</b><br>" + style["label"] +
+                               ": %{y:.3f} GB<extra></extra>"),
             ), row=i, col=1)
 
+    # Layout: title on top, legend in a single row directly below the title
+    # but still above all subplots. The extra top margin keeps the legend
+    # from overlapping the first workflow's plot area.
     fig.update_layout(
-        barmode="group",
         title=dict(
-            text=f"Max Memory (AllocMonitor) — {version_prefix}_X",
+            text=f"Max Memory (AllocMonitor) trend — {version_prefix}_X",
             x=0.5, xanchor="center", font=dict(size=18),
         ),
-        height=320 * len(workflows) + 100,
+        height=340 * len(workflows) + 160,
         width=1400,
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-        margin=dict(l=70, r=30, t=80, b=40),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom", y=1.04,
+            xanchor="center", x=0.5,
+            bgcolor="rgba(0,0,0,0)",
+            font=dict(size=12),
+        ),
+        margin=dict(l=70, r=30, t=140, b=40),
+        hovermode="x unified",
     )
     for i in range(1, len(workflows) + 1):
-        fig.update_yaxes(title_text="Peak memory (GB)", row=i, col=1)
+        fig.update_yaxes(title_text="Peak memory (GB)", row=i, col=1, rangemode="tozero")
         fig.update_xaxes(tickangle=-45, row=i, col=1)
 
     out = f"{version_prefix}_maxmem.html"
