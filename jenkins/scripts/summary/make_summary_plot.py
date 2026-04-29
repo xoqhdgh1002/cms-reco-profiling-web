@@ -1,14 +1,17 @@
 """Build per-step Plotly summary (table + time-series + histograms) covering
-every release in the same X-version family.
+every release in the same X-version family. Also build a family-level
+MaxMemoryPreload (AllocMonitor) bar chart per Javier's 2025-11-26 request.
 
-Output filename: <version>_<step>_<workflow>.html — inline shell xrdcopies
-`*.html` from cwd to summary_plot_html/.
+Output filenames (all land in summary_plot_html/ via the inline shell glob):
+- <version>_<step>_<workflow>.html  → existing per-step plot
+- <version>_maxmem.html             → new family-level peak-memory plot
 """
 
 from __future__ import annotations
 
 import os
 import random
+import re
 import sys
 
 import numpy as np
@@ -31,6 +34,144 @@ SUBPLOT_TITLES = [
 def family_releases(version_prefix: str, base: str) -> list[str]:
     """Releases in the same version family (e.g. all 'CMSSW_14_0' tags)."""
     return [r for r in os.listdir(base) if version_prefix in r]
+
+
+def _release_sort_key(release: str) -> tuple:
+    """Sort key matching the rest of the pipeline (pre0..pre6 < base < patch1..)."""
+    parts = release.split("_")
+    try:
+        major = int(parts[1]); minor = int(parts[2]); patch = int(parts[3])
+    except (IndexError, ValueError):
+        major = minor = patch = -1
+    suffix = parts[4] if len(parts) >= 5 else ""
+    if suffix.startswith("pre"):
+        try: sub = -1000 + int(suffix[3:])
+        except ValueError: sub = -500
+    elif suffix.startswith("patch"):
+        try: sub = int(suffix[5:])
+        except ValueError: sub = 500
+    elif suffix == "":
+        sub = 0
+    else:
+        sub = 750
+    return (major, minor, patch, sub, release)
+
+
+_MAX_MEM_RE = re.compile(r"max memory used:\s*(-?\d+)")
+
+
+def _read_max_memory_bytes(path: str) -> int | None:
+    """Last 'max memory used: <bytes>' value in the file, or None."""
+    try:
+        with open(path) as f:
+            text = f.read()
+    except OSError:
+        return None
+    matches = _MAX_MEM_RE.findall(text)
+    if not matches:
+        return None
+    try:
+        return int(matches[-1])
+    except ValueError:
+        return None
+
+
+# Per-step colour palette for the bar chart. step3 (RECO) is the headline pass.
+_STEP_COLOURS = {
+    "step2": "#94a3b8", "step3": "#2563eb", "step4": "#16a34a", "step5": "#f97316",
+}
+
+
+def write_family_maxmem_plot(version_prefix: str, profile_data: str) -> None:
+    """Family-level grouped-bar Plotly chart of MaxMemoryPreload values.
+
+    For every release in the family × workflow it has × step it analyses,
+    pull the trailing 'max memory used:' from
+    RESULT_PATH/Time_Mem_Summary/<rel>/<arch>/<wf>/memory_report_step{N}.txt
+    (already populated by found_report.py + the inline-shell xrdcopy).
+
+    Renders one stacked subplot per workflow, x=release ordered by version,
+    y=peak memory in GB, colour=step. Output: <version_prefix>_maxmem.html
+    in cwd; the inline-shell xrdcopy of `*.html` puts it in summary_plot_html/.
+    """
+    rows = []
+    for cmssw in family_releases(version_prefix, profile_data):
+        cmssw_path = os.path.join(profile_data, cmssw)
+        if not os.path.isdir(cmssw_path):
+            continue
+        archs = os.listdir(cmssw_path)
+        if not archs:
+            continue
+        arch = archs[0]
+        arch_path = os.path.join(cmssw_path, arch)
+        if not os.path.isdir(arch_path):
+            continue
+        for workflow in os.listdir(arch_path):
+            for step in _common.steps_for(workflow):
+                mem_path = _common.result_subdir(
+                    "Time_Mem_Summary", cmssw, arch, workflow,
+                    f"memory_report_{step}.txt")
+                if not os.path.isfile(mem_path):
+                    continue
+                value = _read_max_memory_bytes(mem_path)
+                if value is None:
+                    continue
+                rows.append({
+                    "release": cmssw, "workflow": workflow, "step": step,
+                    "max_used_gb": value / 1e9,
+                    "key": _release_sort_key(cmssw),
+                })
+    if not rows:
+        return
+
+    # Group rows by workflow, sort releases within each workflow by version.
+    workflows = sorted({r["workflow"] for r in rows})
+    fig = make_subplots(
+        rows=len(workflows), cols=1,
+        subplot_titles=[f"Workflow {wf}" for wf in workflows],
+        vertical_spacing=0.10,
+    )
+
+    for i, wf in enumerate(workflows, 1):
+        wf_rows = [r for r in rows if r["workflow"] == wf]
+        steps_present = sorted({r["step"] for r in wf_rows})
+        # Releases that contributed at least one bar in this workflow,
+        # ordered by version key.
+        rels = sorted({r["release"] for r in wf_rows},
+                      key=_release_sort_key)
+        for step in steps_present:
+            ys = []
+            for rel in rels:
+                hit = next((r for r in wf_rows
+                            if r["release"] == rel and r["step"] == step), None)
+                ys.append(hit["max_used_gb"] if hit else None)
+            fig.add_trace(go.Bar(
+                x=rels,
+                y=ys,
+                name=step,
+                marker_color=_STEP_COLOURS.get(step, "#666"),
+                legendgroup=step,
+                showlegend=(i == 1),
+                hovertemplate="%{x}<br>" + step + ": %{y:.2f} GB<extra></extra>",
+            ), row=i, col=1)
+
+    fig.update_layout(
+        barmode="group",
+        title=dict(
+            text=f"Max Memory (AllocMonitor) — {version_prefix}_X",
+            x=0.5, xanchor="center", font=dict(size=18),
+        ),
+        height=320 * len(workflows) + 100,
+        width=1400,
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        margin=dict(l=70, r=30, t=80, b=40),
+    )
+    for i in range(1, len(workflows) + 1):
+        fig.update_yaxes(title_text="Peak memory (GB)", row=i, col=1)
+        fig.update_xaxes(tickangle=-45, row=i, col=1)
+
+    out = f"{version_prefix}_maxmem.html"
+    io.write_html(fig, out)
 
 
 def main() -> None:
@@ -130,6 +271,10 @@ def main() -> None:
 
         out = f"{version_prefix}_{step}_{workflow}.html"
         io.write_html(fig, out)
+
+    # Family-level MaxMemoryPreload chart. Idempotent — every (release, wf)
+    # invocation rewrites the same <family>_maxmem.html with the latest data.
+    write_family_maxmem_plot(version_prefix, base)
 
 
 if __name__ == "__main__":

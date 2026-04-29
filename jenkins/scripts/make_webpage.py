@@ -224,13 +224,33 @@ def build_release(release: str) -> dict:
 
 
 def group_summary_plots(plots: list[str], releases: dict) -> dict[str, list[str]]:
-    """Family-name → matching summary_plot_html filenames."""
+    """Family-name → matching per-step summary_plot_html filenames.
+
+    Excludes <family>_maxmem.html which is grouped separately so it can get
+    its own dedicated link slot in the family header.
+    """
     families = sorted({r["family"] for r in releases.values() if r.get("family")})
     out: dict[str, list[str]] = {f: [] for f in families}
     for plot in plots:
+        if "_maxmem" in plot:
+            continue  # handled by group_maxmem_plots()
         for fam in families:
             if fam in plot:
                 out[fam].append(plot)
+                break
+    return out
+
+
+def group_maxmem_plots(plots: list[str], releases: dict) -> dict[str, str]:
+    """Family-name → its single <family>_maxmem.html filename (if any)."""
+    families = sorted({r["family"] for r in releases.values() if r.get("family")})
+    out: dict[str, str] = {}
+    for plot in plots:
+        if "_maxmem" not in plot:
+            continue
+        for fam in families:
+            if plot.startswith(fam + "_maxmem"):
+                out[fam] = plot
                 break
     return out
 
@@ -271,6 +291,7 @@ def build_manifest(recent_release: str) -> dict:
         "result_address": _common.RESULT_ADDRESS,
         "step_meta": STEP_META,
         "summary_plots_by_family": group_summary_plots(summary_html, releases),
+        "maxmem_plot_by_family": group_maxmem_plots(summary_html, releases),
         "eventsize_plots_by_family_short": group_eventsize_plots(
             [p for p in hist if "Eventsize" in p], releases),
         "recent_plots": [p for p in hist if "Recent" in p],
@@ -292,11 +313,6 @@ HTML_HEAD = """<!DOCTYPE html>
   .preview-time { font-size: small; color: green; }
   .preview-size { font-size: small; color: red; }
   .max-mem    { font-size: small; color: #0066cc; font-weight: 600; }
-  .mem-chart  { margin: 0.4em 0 0.8em 0; }
-  .mem-chart svg { display: block; max-width: 100%; height: auto; background: #fafafa;
-                   border: 1px solid #ddd; border-radius: 4px; }
-  .mem-legend { font-size: small; margin: 0.2em 0; }
-  .mem-legend span { display: inline-block; padding: 0 0.6em; margin-right: 0.3em; }
   ul { padding-left: 1.5em; }
   hr { margin: 0.8em 0; }
   a { text-decoration: none; }
@@ -334,127 +350,20 @@ function detectStep(name) {
   return null;
 }
 
-// Per-step colours for the AllocMonitor bar chart. Step3 is the headline RECO
-// step; step4/step5 are the lighter MiniAOD/NanoAOD passes.
+// Per-step colours retained for legend badges next to other plot links.
 const STEP_COLOURS = { step2: '#94a3b8', step3: '#2563eb', step4: '#16a34a', step5: '#f97316' };
-
-function shortReleaseLabel(rel) {
-  // CMSSW_16_1_0_pre3 → "16_1_0_pre3"
-  return rel.replace(/^CMSSW_/, '');
-}
-
-function buildMemoryChart(family, releases) {
-  // Collect (release, workflow, step, gb) tuples. Group by workflow.
-  const byWf = {};
-  for (const rel of releases) {
-    const info = MANIFEST.releases[rel];
-    if (!info || !info.workflows) continue;
-    for (const wf of Object.keys(info.workflows)) {
-      const wfInfo = info.workflows[wf];
-      if (!wfInfo.steps) continue;
-      for (const step of Object.keys(wfInfo.steps)) {
-        const cell = wfInfo.steps[step];
-        if (!cell || !cell.max_memory || cell.max_memory.max_used == null) continue;
-        if (!byWf[wf]) byWf[wf] = {};
-        if (!byWf[wf][rel]) byWf[wf][rel] = {};
-        byWf[wf][rel][step] = cell.max_memory.max_used / 1e9;  // bytes → GB
-      }
-    }
-  }
-
-  if (Object.keys(byWf).length === 0) return null;
-
-  const wrapper = el('div', { html: '<div style="font-weight:600;color:#0066cc;margin:0.4em 0;">' +
-    'Max Memory (AllocMonitor) — release × workflow comparison</div>' });
-
-  for (const wf of Object.keys(byWf).sort()) {
-    const relsHere = releases.filter(function(r) { return byWf[wf][r]; });
-    if (!relsHere.length) continue;
-
-    const stepsPresent = STEPS.filter(function(s) {
-      return relsHere.some(function(r) { return byWf[wf][r][s] != null; });
-    });
-    if (!stepsPresent.length) continue;
-
-    // Layout
-    const W = Math.max(360, 60 + relsHere.length * (28 + stepsPresent.length * 14));
-    const H = 200;
-    const padL = 50, padR = 10, padT = 25, padB = 70;
-    const plotW = W - padL - padR;
-    const plotH = H - padT - padB;
-
-    let maxGB = 0;
-    for (const r of relsHere) for (const s of stepsPresent) {
-      const v = byWf[wf][r][s];
-      if (v != null && v > maxGB) maxGB = v;
-    }
-    if (maxGB <= 0) continue;
-    const yMax = Math.ceil(maxGB * 1.1 * 10) / 10;  // round up to 0.1 GB
-
-    const barGroupW = plotW / relsHere.length;
-    const barW = Math.max(3, (barGroupW - 6) / stepsPresent.length);
-
-    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '">';
-    // Title
-    svg += '<text x="' + (W / 2) + '" y="14" text-anchor="middle" font-size="11" font-weight="600">' +
-           'Workflow ' + wf + ' (peak GB)</text>';
-    // Y axis
-    svg += '<line x1="' + padL + '" y1="' + padT + '" x2="' + padL + '" y2="' + (padT + plotH) + '" stroke="#555"/>';
-    // 4 horizontal grid lines + Y labels
-    for (let i = 0; i <= 4; i++) {
-      const y = padT + plotH - (plotH * i / 4);
-      const v = (yMax * i / 4).toFixed(1);
-      svg += '<line x1="' + padL + '" y1="' + y + '" x2="' + (padL + plotW) + '" y2="' + y +
-             '" stroke="#eee"/>';
-      svg += '<text x="' + (padL - 4) + '" y="' + (y + 3) + '" text-anchor="end" font-size="9" fill="#666">' + v + '</text>';
-    }
-    // X axis
-    svg += '<line x1="' + padL + '" y1="' + (padT + plotH) + '" x2="' + (padL + plotW) +
-           '" y2="' + (padT + plotH) + '" stroke="#555"/>';
-
-    // Bars
-    for (let i = 0; i < relsHere.length; i++) {
-      const r = relsHere[i];
-      const groupX = padL + i * barGroupW + 3;
-      // X label (release short, rotated -45deg)
-      const labelX = groupX + barGroupW / 2 - 3;
-      const labelY = padT + plotH + 12;
-      svg += '<text x="' + labelX + '" y="' + labelY + '" text-anchor="end" font-size="9" fill="#333" ' +
-             'transform="rotate(-45 ' + labelX + ' ' + labelY + ')">' + shortReleaseLabel(r) + '</text>';
-
-      for (let j = 0; j < stepsPresent.length; j++) {
-        const s = stepsPresent[j];
-        const v = byWf[wf][r][s];
-        if (v == null) continue;
-        const h = (v / yMax) * plotH;
-        const x = groupX + j * barW;
-        const y = padT + plotH - h;
-        svg += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + barW.toFixed(1) +
-               '" height="' + h.toFixed(1) + '" fill="' + STEP_COLOURS[s] + '">' +
-               '<title>' + r + ' / ' + s + ': ' + v.toFixed(2) + ' GB</title></rect>';
-      }
-    }
-    svg += '</svg>';
-
-    const chartDiv = el('div', { html:
-      '<div class="mem-chart">' + svg + '</div>' +
-      '<div class="mem-legend">' + stepsPresent.map(function(s) {
-        return '<span style="background:' + STEP_COLOURS[s] + ';color:white;border-radius:3px;">' +
-               STEP_META[s].short + '</span>';
-      }).join(' ') + '</div>'
-    });
-    wrapper.appendChild(chartDiv);
-  }
-  return wrapper;
-}
 
 function emitFamilyHeader(details, family, familyShort, familyReleases) {
   details.appendChild(el('h2', { html: family + '_X' }));
 
-  // AllocMonitor / MaxMemoryPreload comparison chart for this family.
-  const memChart = buildMemoryChart(family, familyReleases);
-  if (memChart) {
-    details.appendChild(memChart);
+  // AllocMonitor / MaxMemoryPreload chart on its own page (in summary_plot_html/).
+  const maxmemPlot = MANIFEST.maxmem_plot_by_family && MANIFEST.maxmem_plot_by_family[family];
+  if (maxmemPlot) {
+    details.appendChild(el('h3', { html:
+      'Max Memory (AllocMonitor) — ' + family + '_X ' +
+      '<a target="_blank" href="' + ADDR + 'summary_plot_html/' + maxmemPlot +
+      '" title="MaxMemoryPreload comparison">[Max Memory plot]</a>'
+    }));
     details.appendChild(el('hr'));
   }
 
