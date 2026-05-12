@@ -1,21 +1,62 @@
+"""Pre-create the result directory tree on EOS and stage cmdLog_profiling files.
+
+Sweeps every (release, arch, workflow) found under DATA_DIR and ensures a
+matching subtree exists under each RESULT_PATH/<category>/ that the rest of
+the pipeline writes into. Also copies cmdLog_profiling.sh -> cmdLog_profiling.txt.
+
+The original implementation called `cp` with `os.system` and missed the parent
+mkdir, producing dozens of "cannot create regular file" errors per build. This
+version uses `shutil.copy2` and creates the parent directory beforehand.
+"""
+
+from __future__ import annotations
+
 import os
+import shutil
 import sys
-from shutil import copyfile
-import yaml
 
-data_path = '/eos/cms/store/user/cmsbuild/profiling/data/'
-results_path = '/eos/project/c/cmsweb/www/reco-prof/results/' 
-cmssw = os.listdir(data_path)
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import _common
 
-workflow ={}
 
-for result_dir in os.listdir(results_path):
-	if result_dir == 'comp_igprof' or result_dir == 'summary_plot_html':
-		continue
-	for i in cmssw:
-		gcc = os.listdir(data_path + i)[0]
-		workflow[i] = {"gcc":gcc,"workflow":os.listdir(data_path + i +'/' + gcc)}
-		for j in os.listdir(data_path + i + '/' + gcc):
-			child_dir = results_path + result_dir + '/' + i + '/' + gcc + '/' + j
-			os.makedirs(child_dir,exist_ok=True) 
-			os.system("cp {0}{1}/{2}/{3}/cmdLog_profiling.sh {4}cmdlog/{1}/{2}/{3}/cmdLog_profiling.txt".format(data_path,i,gcc,j,results_path))
+def main() -> None:
+    data_path = _common.DATA_DIR
+    results_path = _common.RESULT_PATH
+
+    if not os.path.isdir(data_path):
+        sys.exit(f"profiling data root not found: {data_path}")
+    if not os.path.isdir(results_path):
+        sys.exit(f"web results root not found: {results_path}")
+
+    cmssw_releases = sorted(os.listdir(data_path))
+
+    # Categories that mirror the (release, arch, workflow) tree. comp_igprof
+    # and summary_plot_html have flat layouts so they're skipped here.
+    categories = [
+        d for d in os.listdir(results_path)
+        if d not in {"comp_igprof", "summary_plot_html"}
+    ]
+
+    for release in cmssw_releases:
+        release_dir = os.path.join(data_path, release)
+        archs = os.listdir(release_dir)
+        if not archs:
+            continue
+        gcc = archs[0]  # one production arch per release; matches inline shell convention.
+
+        workflows = os.listdir(os.path.join(release_dir, gcc))
+        for workflow in workflows:
+            for category in categories:
+                target = os.path.join(results_path, category, release, gcc, workflow)
+                os.makedirs(target, exist_ok=True)
+
+            src = os.path.join(release_dir, gcc, workflow, "cmdLog_profiling.sh")
+            dst = os.path.join(results_path, "cmdlog", release, gcc, workflow, "cmdLog_profiling.txt")
+            if not os.path.isfile(src):
+                continue
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            shutil.copy2(src, dst)
+
+
+if __name__ == "__main__":
+    main()

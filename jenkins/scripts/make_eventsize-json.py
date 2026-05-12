@@ -1,134 +1,116 @@
-import os
+"""Convert `edmEventSize` text output into JSON for the circles pie-chart UI.
+
+Input:  edmEventSize text file. First line carries the path to the .root file
+        (from which we recover release / arch / step). Second line is a
+        column header, skipped. Subsequent lines are either:
+
+            <collection>:<branch>  (TYPE)            <uncomp>  <comp>
+        or:
+            <collection>:<sub_branch>                <uncomp>  <comp>
+
+        The first form starts a new module; the second is folded into the
+        running module's totals.
+
+Output: <release>_<arch>_<step>_eventSize.json with the structure expected
+        by results/circles/web/eventsize.php.
+
+Sizes are stored in kB and multiplied by nEvents (the per-event size
+already comes through the file: edmEventSize prints byte-per-event values,
+so multiplication restores the integral that the PHP UI expects).
+"""
+
+from __future__ import annotations
+
 import json
-import csv
-#import string
-
-def findVersion(firstline):
-	for idx in range(len(firstline)):
-		if 'CMSSW' in firstline[idx]:
-			flist = firstline[idx].split("/")
-			for seq in range(len(flist)):
-				if 'CMSSW' in flist[seq]:
-					version = flist[seq]
-					spec = flist[seq+2]
-					step = flist[seq+3].replace(".root","")
-	return version, spec, step
+import os
+import sys
 
 
-def main(filename):
-
-	## Variables Initialization
-	modules = []
-	resources = []
-	total = {}
-	output = {}
-	cnt = 0
-	total_uncom = 0.0
-	total_compr = 0.0
-
-	with open(filename) as f:
-		## lineloop
-		for l in f:
-			## avoiding lastline
-			try:		
-				vl = l.split(" ")
-				#print(vl)
-
-				## nEvents
-				if cnt == 0:
-					nEvents = vl[-1].replace("\n","")
-					version, spec, step = findVersion(vl)
-					cnt = cnt + 1
-					continue
-
-				if cnt == 1:
-					cnt = cnt - 2
-					continue
-
-				## Normalline discriminator
-				disc = vl[1]
-				modulesDict = {}
-				#print(disc)
-
-				## Mainline clusters
-				if '(' in disc:
-					## Preprocessing
-					collections = vl[0].split(":")
-					collection = collections[0]
-					#cl = collections[0]
-					cl = vl[1]
-					size_uncom = vl[-2]
-					size_compr = vl[-1].replace("\n","")
-					cl = cl.replace("(","").replace(")","")
-		
-					## Making dictionary
-					modulesDict['events'] = int(nEvents)
-					modulesDict['label'] = collection
-
-					### SIZE * nEvents (because of overlapping division) / kB unit
-					modulesDict['size_uncom'] = (float(size_uncom)/1024.)*int(nEvents)
-					modulesDict['size_compr'] = (float(size_compr)/1024.)*int(nEvents)
-					modulesDict['type'] = cl
-					print(modulesDict)
-
-					## Sum for total
-					total_uncom = total_uncom + (float(size_uncom)/1024.)*int(nEvents)
-					total_compr = total_compr + (float(size_compr)/1024.)*int(nEvents)
-
-				else:
-					size_uncom = vl[-2]
-					size_compr = vl[-1].replace("\n","")
-
-					## Sum for total
-					total_uncom = total_uncom + (float(size_uncom)/1024.)*int(nEvents)
-					total_compr = total_compr + (float(size_compr)/1024.)*int(nEvents)
-
-				if len(modulesDict) != 0:
-					modules.append(modulesDict)
-
-			except:
-				break
-
-		## make resources
-		size_uncomDict = {}
-		size_comprDict = {}
-		size_uncomDict['size_uncom'] = "Average Uncompressed Size"
-		size_comprDict['size_compr'] = "Average Compressed Size"
-		resources.append(size_uncomDict)
-		resources.append(size_comprDict)
-
-		## make total
-		total['events'] = nEvents
-		total['label'] = "step3_eventsize"
-		total['size_uncom'] = total_uncom
-		total['size_compr'] = total_compr
-		total['type'] = "job"
-
-		## merge modules
-		output['modules'] = modules
-		output['resources'] = resources
-		output['total'] = total
-
-		## Output
-		fileModules = open(version+"_"+spec+"_"+step+"_eventSize.json","w")
-		
-		## dump and save
-		json.dump(output, fileModules, ensure_ascii=False, indent=4 )
-
-### I/O check
-if len(os.sys.argv) < 2:
-	print("Missing Input file!!")
-	exit(-9)
+def find_release_spec_step(first_line_tokens: list[str]) -> tuple[str, str, str]:
+    """Recover (release, arch, step) from the first-line CMSSW path token."""
+    for tok in first_line_tokens:
+        if "CMSSW" not in tok:
+            continue
+        parts = tok.split("/")
+        for i, p in enumerate(parts):
+            if "CMSSW" in p:
+                release = p
+                arch = parts[i + 2]
+                step = parts[i + 3].replace(".root", "")
+                return release, arch, step
+    raise ValueError("no CMSSW path token found in first line")
 
 
-### define I/O
-filename = os.sys.argv[1]
-#output = os.sys.argv[2]
+def main(filename: str) -> None:
+    modules: list[dict] = []
+    total_uncom = 0.0
+    total_compr = 0.0
+    n_events = 0
+    release = arch = step = ""
+
+    with open(filename) as f:
+        for line_idx, line in enumerate(f):
+            tokens = line.split(" ")
+
+            # Line 0: "...nEvents N" — last token is the event count.
+            if line_idx == 0:
+                n_events = int(tokens[-1].replace("\n", ""))
+                release, arch, step = find_release_spec_step(tokens)
+                continue
+            # Line 1: column header.
+            if line_idx == 1:
+                continue
+
+            # Defensive: trailing blank lines or short lines from edmEventSize.
+            try:
+                disc = tokens[1]
+                size_uncom = float(tokens[-2])
+                size_compr = float(tokens[-1].replace("\n", ""))
+            except (IndexError, ValueError):
+                break
+
+            uncom_kb = (size_uncom / 1024.0) * n_events
+            compr_kb = (size_compr / 1024.0) * n_events
+
+            if "(" in disc:
+                # Top-level module line: "collection:branch  (TYPE)  uncom  comp"
+                collection = tokens[0].split(":")[0]
+                type_label = disc.replace("(", "").replace(")", "")
+                modules.append({
+                    "events": n_events,
+                    "label": collection,
+                    "size_uncom": uncom_kb,
+                    "size_compr": compr_kb,
+                    "type": type_label,
+                })
+                print(modules[-1])
+
+            total_uncom += uncom_kb
+            total_compr += compr_kb
+
+    output = {
+        "modules": modules,
+        # Resource labels embedded for the circles UI's resource picker.
+        "resources": [
+            {"size_uncom": "Average Uncompressed Size"},
+            {"size_compr": "Average Compressed Size"},
+        ],
+        "total": {
+            "events": str(n_events),
+            "label": "step3_eventsize",   # historical literal — UI keys off this
+            "size_uncom": total_uncom,
+            "size_compr": total_compr,
+            "type": "job",
+        },
+    }
+
+    out_name = f"{release}_{arch}_{step}_eventSize.json"
+    with open(out_name, "w") as fout:
+        json.dump(output, fout, ensure_ascii=False, indent=4)
 
 
-### main code
-if __name__=="__main__":
-	main(filename)
-
-### EOF
-
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Missing Input file!!")
+        sys.exit(-9)
+    main(sys.argv[1])
